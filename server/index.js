@@ -5,7 +5,9 @@ let puerto = process.env.PORT || 3000;
 
 const mongodb = require("mongodb");
 let MongoClient = mongodb.MongoClient;
-let db;
+/* let db; */
+
+const users = require("./users")
 
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
@@ -26,13 +28,15 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use("/users", users);
+
 MongoClient.connect(
   process.env.MONGO_URL,
   { useNewUrlParser: true, useUnifiedTopology: true },
   function (error, client) {
     error
       ? console.log("🔴 MongoDb no está conectado")
-      : ((db = client.db("empresa")), console.log("🟢 MongoDb conectado"));
+      : ((app.locals.db = client.db("empresa")), console.log("🟢 MongoDb conectado"));
   }
 );
 
@@ -104,7 +108,7 @@ app.post("/logout", function (req, res) {
 
 /* ------ RUTAS ------ */
 
-app.post("/signup", function (req, res) {
+/* app.post("/signup", function (req, res) {
   //Esta ruta será /admin/create
   // Aqui es recomendable añadir la encriptación del password con BCrypt
   db.collection("users")
@@ -140,7 +144,7 @@ app.post("/signup", function (req, res) {
         res.send({ mensaje: "Usuario ya registrado" });
       }
     });
-});
+}); */
 
 app.get("/prueba", function (req, res) {
   req.isAuthenticated()
@@ -148,7 +152,7 @@ app.get("/prueba", function (req, res) {
     : res.send({ mensaje: "Sesión no iniciada" });
 });
 
-app.get("/user", function (req, res) {
+/* app.get("/user", function (req, res) {
   if (req.isAuthenticated()) {
     db.collection("users")
       .find({
@@ -163,7 +167,7 @@ app.get("/user", function (req, res) {
   } else {
     res.send({ mensaje: "No se puede acceder a los datos de usuario sin iniciar sesión" });
   }
-});
+}); */
 
 app.listen(puerto, (error) => {
   error
