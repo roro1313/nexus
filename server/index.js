@@ -148,335 +148,490 @@ app.get("/admin", (req, res) => {
 
 app.post("/admin/create", (req, res) => {
   // Aqui es recomendable añadir la encriptación del password con BCrypt
-  db.collection("users")
-    .find({ email: req.body.email })
-    .toArray(function (err, user) {
-      if (user.length === 0) {
-        db.collection("users").insertOne(
-          {
-            nombre: req.body.nombre,
-            apellido: req.body.apellido,
-            foto: req.body.foto,
-            puesto: req.body.puesto,
-            departamento: req.body.departamento,
-            sede: req.body.sede,
-            email: req.body.email,
-            password: req.body.password,
-            movil: req.body.movil,
-            meeting: req.body.meeting,
-            training: req.body.training,
-            vacaciones: req.body.vacaciones,
-            docs: req.body.docs,
-          },
-          function (err, resp) {
-            if (err !== null) {
-              console.log(err);
-              res.send({ mensaje: "Ha habido un error: " + err });
-            } else {
-              res.send({ mensaje: "Datos registrados correctamente" });
+  if (req.isAuthenticated()) {
+    db.collection("users")
+      .find({ email: req.body.email })
+      .toArray(function (err, user) {
+        if (user.length === 0) {
+          db.collection("users").insertOne(
+            {
+              admin: req.body.admin,
+              nombre: req.body.nombre,
+              apellido: req.body.apellido,
+              foto: req.body.foto,
+              puesto: req.body.puesto,
+              departamento: req.body.departamento,
+              sede: req.body.sede,
+              email: req.body.email,
+              password: req.body.password,
+              movil: req.body.movil,
+              meeting: req.body.meeting,
+              training: req.body.training,
+              vacaciones: req.body.vacaciones,
+              docs: req.body.docs,
+            },
+            function (err, resp) {
+              if (err !== null) {
+                console.log(err);
+                res.send({ mensaje: "Ha habido un error: " + err });
+              } else {
+                res.send({ mensaje: "Datos registrados correctamente" });
+              }
             }
-          }
-        );
-      } else {
-        res.send({ mensaje: "Usuario ya registrado" });
-      }
+          );
+        } else {
+          res.send({ mensaje: "Usuario ya registrado" });
+        }
+      });
+  } else {
+    res.send({
+      mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
+  }
 });
 
 app.put("/admin/edit", (req, res) => {
-  db.collection("users").updateOne(
-    { email: req.body.email },
-    {
-      $set: {
-        nombre: req.body.nombre,
-        apellido: req.body.apellido,
-        foto: req.body.foto,
-        puesto: req.body.puesto,
-        departamento: req.body.departamento,
-        sede: req.body.sede,
-        movil: req.body.movil,
-        meeting: req.body.meeting,
-        training: req.body.training,
-        vacaciones: req.body.vacaciones,
-        docs: req.body.docs,
+  if (req.isAuthenticated()) {
+    db.collection("users").updateOne(
+      { email: req.body.email },
+      {
+        $set: {
+          nombre: req.body.nombre,
+          apellido: req.body.apellido,
+          foto: req.body.foto,
+          puesto: req.body.puesto,
+          departamento: req.body.departamento,
+          sede: req.body.sede,
+          movil: req.body.movil,
+          meeting: req.body.meeting,
+          training: req.body.training,
+          vacaciones: req.body.vacaciones,
+          docs: req.body.docs,
+        },
       },
-    },
-    function (error, datos) {
-      error
-        ? res.send({ error: true, contenido: error })
-        : res.send({
-            error: false,
-            mensaje: `Se ha modificado ${datos.modifiedCount} registro correctamente`,
-            contenido: datos,
-          });
-    }
-  );
+      function (error, datos) {
+        error
+          ? res.send({ error: true, contenido: error })
+          : res.send({
+              error: false,
+              mensaje: `Se ha modificado ${datos.modifiedCount} registro correctamente`,
+              contenido: datos,
+            });
+      }
+    );
+  } else {
+    res.send({
+      mensaje: "No se puede acceder a los datos sin iniciar sesión",
+    });
+  }
 });
 
 app.delete("/admin/delete", (req, res) => {
-  db.collection("users").deleteOne(
-    { email: req.body.email },
-    {
-      $set: {
-        nombre: req.body.nombre,
-        apellido: req.body.apellido,
-        foto: req.body.foto,
-        puesto: req.body.puesto,
-        departamento: req.body.departamento,
-        sede: req.body.sede,
-        movil: req.body.movil,
-        meeting: req.body.meeting,
-        training: req.body.training,
-        vacaciones: req.body.vacaciones,
-        docs: req.body.docs,
+  if (req.isAuthenticated()) {
+    db.collection("users").deleteOne(
+      { email: req.body.email },
+      {
+        $set: {
+          nombre: req.body.nombre,
+          apellido: req.body.apellido,
+          foto: req.body.foto,
+          puesto: req.body.puesto,
+          departamento: req.body.departamento,
+          sede: req.body.sede,
+          movil: req.body.movil,
+          meeting: req.body.meeting,
+          training: req.body.training,
+          vacaciones: req.body.vacaciones,
+          docs: req.body.docs,
+        },
       },
-    },
-    function (error, datos) {
-      error
-        ? res.send({ error: true, contenido: error })
-        : res.send({
-            error: false,
-            mensaje: `Se ha eliminado ${datos.deletedCount} registro correctamente`,
-            contenido: datos,
-          });
-    }
-  );
+      function (error, datos) {
+        error
+          ? res.send({ error: true, contenido: error })
+          : res.send({
+              error: false,
+              mensaje: `Se ha eliminado ${datos.deletedCount} registro correctamente`,
+              contenido: datos,
+            });
+      }
+    );
+  } else {
+    res.send({
+      mensaje: "No se puede acceder a los datos sin iniciar sesión",
+    });
+  }
 });
 
 //------------------ Rutas de consulta de información
 
 app.get("/admin/company", (req, res) => {
-  db.collection("users")
-    .find()
-    .toArray((error, datos) => {
-      error
-        ? res.send({ error: true, respuesta: error })
-        : res.send({ error: false, respuesta: datos });
+  if (req.isAuthenticated()) {
+    db.collection("users")
+      .find()
+      .toArray((error, datos) => {
+        error
+          ? res.send({ error: true, respuesta: error })
+          : res.send({ error: false, respuesta: datos });
+      });
+  } else {
+    res.send({
+      mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
+  }
 });
 
 app.post("/admin/user", (req, res) => {
-  db.collection("users")
-    .find({ email: req.body.email })
-    .toArray((error, datos) => {
-      error
-        ? res.send({ error: true, respuesta: error })
-        : res.send({ error: false, respuesta: datos });
+  if (req.isAuthenticated()) {
+    db.collection("users")
+      .find({ email: req.body.email })
+      .toArray((error, datos) => {
+        error
+          ? res.send({ error: true, respuesta: error })
+          : res.send({ error: false, respuesta: datos });
+      });
+  } else {
+    res.send({
+      mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
+  }
 });
 
 app.post("/admin/departamento", (req, res) => {
-  db.collection("users")
-    .find({ departamento: req.body.departamento })
-    .toArray((error, datos) => {
-      error
-        ? res.send({ error: true, respuesta: error })
-        : res.send({ error: false, respuesta: datos });
+  if (req.isAuthenticated()) {
+    db.collection("users")
+      .find({ departamento: req.body.departamento })
+      .toArray((error, datos) => {
+        error
+          ? res.send({ error: true, respuesta: error })
+          : res.send({ error: false, respuesta: datos });
+      });
+  } else {
+    res.send({
+      mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
+  }
 });
 
 app.post("/admin/sede", (req, res) => {
-  db.collection("users")
-    .find({ sede: req.body.sede })
-    .toArray((error, datos) => {
-      error
-        ? res.send({ error: true, respuesta: error })
-        : res.send({ error: false, respuesta: datos });
+  if (req.isAuthenticated()) {
+    db.collection("users")
+      .find({ sede: req.body.sede })
+      .toArray((error, datos) => {
+        error
+          ? res.send({ error: true, respuesta: error })
+          : res.send({ error: false, respuesta: datos });
+      });
+  } else {
+    res.send({
+      mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
+  }
 });
 
 //------------------ Rutas de administración de formaciones:
 
 app.get("/admin/training", (req, res) => {
-  db.collection("training")
-    .find()
-    .toArray((error, datos) => {
-      error
-        ? res.send({ error: true, respuesta: error })
-        : res.send({ error: false, respuesta: datos });
+  if (req.isAuthenticated()) {
+    db.collection("training")
+      .find()
+      .toArray((error, datos) => {
+        error
+          ? res.send({ error: true, respuesta: error })
+          : res.send({ error: false, respuesta: datos });
+      });
+  } else {
+    res.send({
+      mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
+  }
 });
 
 app.post("/admin/training/create", (req, res) => {
-  db.collection("training")
-    .find({ code: req.body.code })
-    .toArray((error, data) => {
-      if (error) {
-        res.send({ error: true, contenido: error });
-      } else {
-        if (data.length === 1) {
-          res.send({
-            error: false,
-            mensaje: "El código de formación ya existe",
-          });
+  if (req.isAuthenticated()) {
+    db.collection("training")
+      .find({ code: req.body.code })
+      .toArray((error, data) => {
+        if (error) {
+          res.send({ error: true, contenido: error });
         } else {
-          db.collection("training").insertOne(
-            {
-              nombre: req.body.nombre,
-              code: req.body.code,
-              descripcion: req.body.descripcion,
-              fecha: req.body.fecha,
-              lugar: req.body.lugar,
-              asistentes: req.body.asistentes,
-            },
-            function (error, datos) {
-              error
-                ? res.send({ error: true, contenido: error })
-                : res.send({
-                    error: false,
-                    mensaje: `Se ha creado ${datos.insertedCount} formación correctamente`,
-                    contenido: datos,
-                  });
-            }
-          );
+          if (data.length === 1) {
+            res.send({
+              error: false,
+              mensaje: "El código de formación ya existe",
+            });
+          } else {
+            db.collection("training").insertOne(
+              {
+                nombre: req.body.nombre,
+                code: req.body.code,
+                descripcion: req.body.descripcion,
+                fecha: req.body.fecha,
+                lugar: req.body.lugar,
+                asistentes: req.body.asistentes,
+              },
+              function (error, datos) {
+                error
+                  ? res.send({ error: true, contenido: error })
+                  : res.send({
+                      error: false,
+                      mensaje: `Se ha creado ${datos.insertedCount} formación correctamente`,
+                      contenido: datos,
+                    });
+              }
+            );
+          }
         }
-      }
+      });
+  } else {
+    res.send({
+      mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
+  }
 });
 
 app.put("/admin/training/edit", (req, res) => {
-  db.collection("training").updateOne(
-    { code: req.body.code },
-    {
-      $set: {
-        nombre: req.body.nombre,
-        descripcion: req.body.descripcion,
-        fecha: req.body.fecha,
-        lugar: req.body.lugar,
-        asistentes: req.body.asistentes,
-      },
-    },
-    function (error, datos) {
-      error
-        ? res.send({ error: true, contenido: error })
-        : res.send({
-            error: false,
-            mensaje: `Se ha modificado ${datos.modifiedCount} formación correctamente`,
-            contenido: datos,
-          });
-    }
-  );
+  if (req.isAuthenticated()) {
+    db.collection("training")
+      .find({ code: req.body.code })
+      .toArray((error, data) => {
+        if (error) {
+          res.send({ error: true, contenido: error });
+        } else {
+          if (data.length === 0) {
+            res.send({
+              error: false,
+              mensaje:
+                "El código de formación no existe, prueba de nuevo con otro código",
+            });
+          } else {
+            db.collection("training").updateOne(
+              { code: req.body.code },
+              {
+                $set: {
+                  nombre: req.body.nombre,
+                  descripcion: req.body.descripcion,
+                  fecha: req.body.fecha,
+                  lugar: req.body.lugar,
+                  asistentes: req.body.asistentes,
+                },
+              },
+              function (error, datos) {
+                error
+                  ? res.send({ error: true, contenido: error })
+                  : res.send({
+                      error: false,
+                      mensaje: `Se ha modificado ${datos.modifiedCount} formación correctamente`,
+                      contenido: datos,
+                    });
+              }
+            );
+          }
+        }
+      });
+  } else {
+    res.send({
+      mensaje: "No se puede acceder a los datos sin iniciar sesión",
+    });
+  }
 });
 
 app.delete("/admin/training/delete", (req, res) => {
-  db.collection("training").deleteOne(
-    { code: req.body.code },
-    {
-      $set: {
-        nombre: req.body.nombre,
-        descripcion: req.body.descripcion,
-        fecha: req.body.fecha,
-        lugar: req.body.lugar,
-        asistentes: req.body.asistentes,
-      },
-    },
-    function (error, datos) {
-      error
-        ? res.send({ error: true, contenido: error })
-        : res.send({
-            error: false,
-            mensaje: `Se ha eliminado ${datos.deletedCount} formación correctamente`,
-            contenido: datos,
-          });
-    }
-  );
+  if (req.isAuthenticated()) {
+    db.collection("training")
+      .find({ code: req.body.code })
+      .toArray((error, data) => {
+        if (error) {
+          res.send({ error: true, contenido: error });
+        } else {
+          if (data.length === 0) {
+            res.send({
+              error: false,
+              mensaje:
+                "El código de formación no existe, prueba de nuevo con otro código",
+            });
+          } else {
+            db.collection("training").deleteOne(
+              { code: req.body.code },
+              {
+                $set: {
+                  nombre: req.body.nombre,
+                  descripcion: req.body.descripcion,
+                  fecha: req.body.fecha,
+                  lugar: req.body.lugar,
+                  asistentes: req.body.asistentes,
+                },
+              },
+              function (error, datos) {
+                error
+                  ? res.send({ error: true, contenido: error })
+                  : res.send({
+                      error: false,
+                      mensaje: `Se ha eliminado ${datos.deletedCount} formación correctamente`,
+                      contenido: datos,
+                    });
+              }
+            );
+          }
+        }
+      });
+  } else {
+    res.send({
+      mensaje: "No se puede acceder a los datos sin iniciar sesión",
+    });
+  }
 });
 
 //------------------ Rutas de administración de eventos:
 
 app.get("/admin/meeting", (req, res) => {
-  db.collection("meeting")
-    .find()
-    .toArray((error, datos) => {
-      error
-        ? res.send({ error: true, respuesta: error })
-        : res.send({ error: false, respuesta: datos });
+  if (req.isAuthenticated()) {
+    db.collection("meeting")
+      .find()
+      .toArray((error, datos) => {
+        error
+          ? res.send({ error: true, respuesta: error })
+          : res.send({ error: false, respuesta: datos });
+      });
+  } else {
+    res.send({
+      mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
+  }
 });
 
 app.post("/admin/meeting/create", (req, res) => {
-  db.collection("meeting")
-    .find({ code: req.body.code })
-    .toArray((error, data) => {
-      if (error) {
-        res.send({ error: true, contenido: error });
-      } else {
-        if (data.length === 1) {
-          res.send({
-            error: false,
-            mensaje: "El código de reunión ya existe",
-          });
+  if (req.isAuthenticated()) {
+    db.collection("meeting")
+      .find({ code: req.body.code })
+      .toArray((error, data) => {
+        if (error) {
+          res.send({ error: true, contenido: error });
         } else {
-          db.collection("meeting").insertOne(
-            {
-              nombre: req.body.nombre,
-              code: req.body.code,
-              descripcion: req.body.descripcion,
-              fecha: req.body.fecha,
-              lugar: req.body.lugar,
-              asistentes: req.body.asistentes,
-            },
-            function (error, datos) {
-              error
-                ? res.send({ error: true, contenido: error })
-                : res.send({
-                    error: false,
-                    mensaje: `Se ha creado ${datos.insertedCount} reunión correctamente`,
-                    contenido: datos,
-                  });
-            }
-          );
+          if (data.length === 1) {
+            res.send({
+              error: false,
+              mensaje: "El código de meeting ya existe",
+            });
+          } else {
+            db.collection("meeting").insertOne(
+              {
+                nombre: req.body.nombre,
+                code: req.body.code,
+                descripcion: req.body.descripcion,
+                fecha: req.body.fecha,
+                lugar: req.body.lugar,
+                asistentes: req.body.asistentes,
+              },
+              function (error, datos) {
+                error
+                  ? res.send({ error: true, contenido: error })
+                  : res.send({
+                      error: false,
+                      mensaje: `Se ha creado ${datos.insertedCount} meeting correctamente`,
+                      contenido: datos,
+                    });
+              }
+            );
+          }
         }
-      }
+      });
+  } else {
+    res.send({
+      mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
+  }
 });
 
 app.put("/admin/meeting/edit", (req, res) => {
-  db.collection("meeting").updateOne(
-    { code: req.body.code },
-    {
-      $set: {
-        nombre: req.body.nombre,
-        descripcion: req.body.descripcion,
-        fecha: req.body.fecha,
-        lugar: req.body.lugar,
-        asistentes: req.body.asistentes,
-      },
-    },
-    function (error, datos) {
-      error
-        ? res.send({ error: true, contenido: error })
-        : res.send({
-            error: false,
-            mensaje: `Se ha modificado ${datos.modifiedCount} reunión correctamente`,
-            contenido: datos,
-          });
-    }
-  );
+  if (req.isAuthenticated()) {
+    db.collection("meeting")
+      .find({ code: req.body.code })
+      .toArray((error, data) => {
+        if (error) {
+          res.send({ error: true, contenido: error });
+        } else {
+          if (data.length === 0) {
+            res.send({
+              error: false,
+              mensaje:
+                "El código de meeting no existe, prueba de nuevo con otro código",
+            });
+          } else {
+            db.collection("meeting").updateOne(
+              { code: req.body.code },
+              {
+                $set: {
+                  nombre: req.body.nombre,
+                  descripcion: req.body.descripcion,
+                  fecha: req.body.fecha,
+                  lugar: req.body.lugar,
+                  asistentes: req.body.asistentes,
+                },
+              },
+              function (error, datos) {
+                error
+                  ? res.send({ error: true, contenido: error })
+                  : res.send({
+                      error: false,
+                      mensaje: `Se ha modificado ${datos.modifiedCount} meeting correctamente`,
+                      contenido: datos,
+                    });
+              }
+            );
+          }
+        }
+      });
+  } else {
+    res.send({
+      mensaje: "No se puede acceder a los datos sin iniciar sesión",
+    });
+  }
 });
 
 app.delete("/admin/meeting/delete", (req, res) => {
-  db.collection("meeting").deleteOne(
-    { code: req.body.code },
-    {
-      $set: {
-        nombre: req.body.nombre,
-        descripcion: req.body.descripcion,
-        fecha: req.body.fecha,
-        lugar: req.body.lugar,
-        asistentes: req.body.asistentes,
-      },
-    },
-    function (error, datos) {
-      error
-        ? res.send({ error: true, contenido: error })
-        : res.send({
-            error: false,
-            mensaje: `Se ha eliminado ${datos.deletedCount} reunión correctamente`,
-            contenido: datos,
-          });
-    }
-  );
+  if (req.isAuthenticated()) {
+    db.collection("meeting")
+      .find({ code: req.body.code })
+      .toArray((error, data) => {
+        if (error) {
+          res.send({ error: true, contenido: error });
+        } else {
+          if (data.length === 0) {
+            res.send({
+              error: false,
+              mensaje:
+                "El código de meeting no existe, prueba de nuevo con otro código",
+            });
+          } else {
+            db.collection("meeting").deleteOne(
+              { code: req.body.code },
+              {
+                $set: {
+                  nombre: req.body.nombre,
+                  descripcion: req.body.descripcion,
+                  fecha: req.body.fecha,
+                  lugar: req.body.lugar,
+                  asistentes: req.body.asistentes,
+                },
+              },
+              function (error, datos) {
+                error
+                  ? res.send({ error: true, contenido: error })
+                  : res.send({
+                      error: false,
+                      mensaje: `Se ha eliminado ${datos.deletedCount} meeting correctamente`,
+                      contenido: datos,
+                    });
+              }
+            );
+          }
+        }
+      });
+  } else {
+    res.send({
+      mensaje: "No se puede acceder a los datos sin iniciar sesión",
+    });
+  }
 });
 
 //------------------ Rutas de administración de vacaciones:
@@ -503,6 +658,81 @@ app.get("/user", (req, res) => {
     });
   }
 });
+
+app.put("/user/edit", (req, res) => {
+  if (req.isAuthenticated()) {
+    db.collection("users").updateOne(
+      { email: req.body.email },
+      {
+        $set: {
+          nombre: req.body.nombre,
+          apellido: req.body.apellido,
+          foto: req.body.foto,
+          puesto: req.body.puesto,
+          departamento: req.body.departamento,
+          sede: req.body.sede,
+          movil: req.body.movil,
+          meeting: req.body.meeting,
+          training: req.body.training,
+          vacaciones: req.body.vacaciones,
+          docs: req.body.docs,
+        },
+      },
+      function (error, datos) {
+        error
+          ? res.send({ error: true, contenido: error })
+          : res.send({
+              error: false,
+              mensaje: `Se ha modificado ${datos.modifiedCount} registro correctamente`,
+              contenido: datos,
+            });
+      }
+    );
+  } else {
+    res.send({
+      mensaje: "No se puede acceder a los datos sin iniciar sesión",
+    });
+  }
+});
+
+app.delete("/user/delete", (req, res) => {
+  if (req.isAuthenticated()) {
+    db.collection("users").deleteOne(
+      { email: req.body.email },
+      {
+        $set: {
+          nombre: req.body.nombre,
+          apellido: req.body.apellido,
+          foto: req.body.foto,
+          puesto: req.body.puesto,
+          departamento: req.body.departamento,
+          sede: req.body.sede,
+          movil: req.body.movil,
+          meeting: req.body.meeting,
+          training: req.body.training,
+          vacaciones: req.body.vacaciones,
+          docs: req.body.docs,
+        },
+      },
+      function (error, datos) {
+        error
+          ? res.send({ error: true, contenido: error })
+          : res.send({
+              error: false,
+              mensaje: `Se ha eliminado ${datos.deletedCount} registro correctamente`,
+              contenido: datos,
+            });
+      }
+    );
+  } else {
+    res.send({
+      mensaje: "No se puede acceder a los datos sin iniciar sesión",
+    });
+  }
+});
+
+
+
 
 app.listen(puerto, (error) => {
   error
