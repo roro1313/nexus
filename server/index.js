@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require("cors")
 require("dotenv").config();
 let puerto = process.env.PORT || 3000;
 
@@ -11,6 +12,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const session = require("express-session");
 
+app.use(cors())
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -66,11 +68,13 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  done(null, user.email);
+  console.log("serialize")
+  done(null, user);
 });
 
-passport.deserializeUser((email, done) => {
-  db.collection("users").findOne({ email: email }, (err, user) => {
+passport.deserializeUser((user, done) => {
+  console.log("deserialize")
+  db.collection("users").findOne({ email: user.email }, (err, user) => {
     if (err) {
       return done(err);
     }
@@ -94,10 +98,12 @@ app.post(
 );
 
 app.all("/api", (req, res) => {
+  console.log("correcto");
   res.send({ logged: true, mensaje: "Login correcto" });
 });
 
 app.all("/api/failed", (req, res) => {
+  console.log("incorrecto")
   res.status(401).send({ logged: false, mensaje: "Denegado" });
 });
 
