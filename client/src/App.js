@@ -14,7 +14,7 @@ import "./App.css";
 function App() {
   let [inputEmail, setInputEmail] = useState("");
   let [inputPass, setInputPass] = useState("");
-  let [loginData, setLoginData] = useState({});
+  let [loginData, setLoginData] = useState({ logged: false });
 
   let [training, setTraining] = useState([]);
   let [meeting, setMeeting] = useState([]);
@@ -26,6 +26,7 @@ function App() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ email: inputEmail, password: inputPass }),
+      credentials: "include",
     })
       .then((res) => res.json())
       .then((data) => {
@@ -61,11 +62,12 @@ function App() {
           setTraining={setTraining}
           meeting={meeting}
           setMeeting={setMeeting}
+          loginData={loginData}
         />
       </Route>
       <Route path="/user/edit">
         <Cabecera />
-        <UserEdit usuario={loginData} />
+        <UserEdit loginData={loginData} />
       </Route>
       <Route path="/user/training">
         <Cabecera />

@@ -1,3 +1,4 @@
+import {Redirect} from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -6,6 +7,9 @@ import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 
 function Login(props) {
+  if (props.loginData.logged){
+    return  <Redirect to='/user'/>
+  } else{
   return (
     <Container>
       <Row className="justify-content-md-center login">
@@ -26,14 +30,13 @@ function Login(props) {
             onChange={(e) => props.setInputPass(e.target.value)}
           />
         </InputGroup>
-        <Button variant="primary" onClick={props.login}>
+        <Button variant="primary" onClick={props.login} >
           Login
         </Button>
-          {props.loginData.mensaje}
           </Col>
       </Row>
     </Container>
-  );
+  );}
 }
 
 export default Login;
