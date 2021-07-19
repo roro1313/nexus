@@ -50,7 +50,7 @@ function UserEdit(props) {
             <Card style={{ width: "50rem" }}>
               <Card.Body>
                 <Card.Text>
-                  <Container>
+                  <Container> {/* Añadir los campos para modificar los datos de usuario y function para enviarlo a /user/edit (PUT) */}
                     <Row>
                       <Col xs sm md lg xl={4}>
                         <h4>Modifica tus datos:</h4>
