@@ -126,7 +126,7 @@ app.all("/api", (req, res) => {
 
 app.all("/api/failed", (req, res) => {
   console.log("login incorrecto, /api/failed");
-  res.send({ logged: false, mensaje: "Denegado" });
+  res.send({ logged: false, mensaje: "Datos incorrectos" });
 });
 
 /* -------------------------------------------------------------------------------- */
@@ -694,15 +694,8 @@ app.put("/user/edit", (req, res) => {
       $set: {
         nombre: req.body.nombre,
         apellido: req.body.apellido,
-        foto: req.body.foto,
-        puesto: req.body.puesto,
-        departamento: req.body.departamento,
-        sede: req.body.sede,
-        movil: req.body.movil,
-        meeting: req.body.meeting,
-        training: req.body.training,
-        vacaciones: req.body.vacaciones,
-        docs: req.body.docs,
+        /* foto: req.body.foto, */
+        /* password: req.body.password, */
       },
     },
     function (error, datos) {
@@ -710,7 +703,7 @@ app.put("/user/edit", (req, res) => {
         ? res.send({ error: true, contenido: error })
         : res.send({
             error: false,
-            mensaje: `Se ha modificado ${datos.modifiedCount} registro correctamente`,
+            mensaje: `Se ha modificado ${datos.modifiedCount} usuario correctamente`,
             contenido: datos,
           });
     }
@@ -746,7 +739,7 @@ app.delete("/user/delete", (req, res) => {
         ? res.send({ error: true, contenido: error })
         : res.send({
             error: false,
-            mensaje: `Se ha eliminado ${datos.deletedCount} registro correctamente`,
+            mensaje: `Se ha eliminado ${datos.deletedCount} usuario correctamente`,
             contenido: datos,
           });
     }

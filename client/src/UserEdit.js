@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -10,12 +11,33 @@ import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 
 function UserEdit(props) {
+  let [inputNombre, setInputNombre] = useState("");
+  let [inputApellido, setInputApellido] = useState("");
+  let [userEdit, setUserEdit] = useState({});
+
+  const cambiarUser = () => {
+    fetch("http://localhost:3001/user/edit", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: props.loginData.user.email,
+        nombre: inputNombre,
+        apellido: inputApellido,
+      }),
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => setUserEdit(data));
+  };
+
   return (
     <>
       <Container className={"user"}>
         <Row>
           <Col xs sm md lg xl={4}>
-            <Card style={{ width: "22rem" }}>
+            <Card style={{ width: "20rem" }}>
               <Card.Img variant="top" src={props.loginData.user.foto} />
               <Card.Body>
                 <Card.Title>¡Hola, {props.loginData.user.nombre}!</Card.Title>
@@ -26,7 +48,7 @@ function UserEdit(props) {
               </Card.Body>
               <ListGroup className="list-group-flush">
                 <ListGroupItem>
-                  <Link to="/user/edit">Editar datos de perfil</Link>
+                  <Link to="/user">Ver datos de perfil</Link>
                 </ListGroupItem>
                 <ListGroupItem>
                   <Link to="/user/training">Formaciones disponibles</Link>
@@ -45,45 +67,29 @@ function UserEdit(props) {
               <Card.Body>
                 <Card.Text>
                   <Container>
-                    {/* Añadir los campos para modificar los datos de usuario y function para enviarlo a /user/edit (PUT) */}
                     <Row>
                       <Col xs sm md lg xl={4}>
                         <h4>Modifica tus datos:</h4>
                         <InputGroup size="md" className="mb-3">
                           <FormControl
                             type="text"
-                            value={props.inputPass}
-                            placeholder={"nombre"}
-                            /* onChange={(e) => props.setInputPass(e.target.value)} */
+                            value={inputNombre}
+                            placeholder={"Introduce tu nuevo nombre"}
+                            onChange={(e) => setInputNombre(e.target.value)}
                           />
                         </InputGroup>
                         <InputGroup size="xs" className="mb-3">
                           <FormControl
                             type="text"
-                            value={props.inputPass}
-                            placeholder={"apellido"}
-                            /* onChange={(e) => props.setInputPass(e.target.value)} */
+                            value={inputApellido}
+                            placeholder={"Introduce tu nuevo apellido"}
+                            onChange={(e) => setInputApellido(e.target.value)}
                           />
                         </InputGroup>
-                        <InputGroup size="xs" className="mb-3">
-                          <FormControl
-                            type="text"
-                            value={props.inputPass}
-                            placeholder={"Teléfono"}
-                            /* onChange={(e) => props.setInputPass(e.target.value)} */
-                          />
-                        </InputGroup>
-                        <InputGroup size="xs" className="mb-3">
-                          <FormControl
-                            type="text"
-                            value={props.inputPass}
-                            placeholder={"Email"}
-                            /* onChange={(e) => props.setInputPass(e.target.value)} */
-                          />
-                        </InputGroup>
-                        <Button variant="primary" onClick={props.login}>
+                        <Button variant="dark" onClick={cambiarUser}>
                           Guardar cambios
                         </Button>
+                        <p>{userEdit.mensaje}</p>
                       </Col>
                     </Row>
                   </Container>

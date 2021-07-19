@@ -1,9 +1,7 @@
+import { Link } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-/* import NavDropdown from "react-bootstrap/Dropdown";
-import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
-import Button from "react-bootstrap/Button"; */
+
 
 function Cabecera(){
     return(
@@ -13,7 +11,6 @@ function Cabecera(){
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link href="/">Inicio</Nav.Link>
-            <Nav.Link href="/">Empresa</Nav.Link>
             <Nav.Link href="/login">Login</Nav.Link>
           </Nav>
         </Navbar.Collapse>

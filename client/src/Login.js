@@ -33,6 +33,7 @@ function Login(props) {
         <Button variant="primary" onClick={props.login} >
           Login
         </Button>
+        <p>{props.loginData.mensaje}</p>
           </Col>
       </Row>
     </Container>
