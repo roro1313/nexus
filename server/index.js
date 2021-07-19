@@ -10,26 +10,44 @@ let db;
 
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const MongoStore = require("connect-mongo");
 const session = require("express-session");
+const cookieParser = require("cookie-parser");
 
-app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
+app.use(
   session({
-    secret: ["secret"],
+    secret: "patata",
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URL,
+      dbName: "empresa",
+      collectionName: "session",
+      ttl: 1000 * 60 * 60 * 24,
+    }),
     cookie: {
-      secure: false,
-      maxAge: 60000,
+      maxAge: 1000 * 60 * 60 * 24,
     },
   })
 );
-
+app.use(cookieParser("patata"));
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use((req, res, next) => {
+  console.log(req.session);
+  console.log(req.user);
+  next();
+});
 
 /* ------------------------------------------------------------------------------------------ */
 /* ------------------------------------ CONEXIÓN MONGODB ------------------------------------ */
@@ -102,13 +120,13 @@ app.post(
 );
 
 app.all("/api", (req, res) => {
-  console.log("correcto, /api");
-  res.send({ logged: true, mensaje: "Login correcto" });
+  console.log("login correcto, /api");
+  res.send({ logged: true, mensaje: "Login correcto", user: req.user });
 });
 
 app.all("/api/failed", (req, res) => {
-  console.log("incorrecto, /api/failed");
-  res.status(401).send({ logged: false, mensaje: "Denegado" });
+  console.log("login incorrecto, /api/failed");
+  res.send({ logged: false, mensaje: "Denegado" });
 });
 
 /* -------------------------------------------------------------------------------- */
@@ -137,7 +155,7 @@ app.get("/prueba", (req, res) => {
 //------------------ Rutas de creación, edición y borrado de datos
 
 app.get("/admin", (req, res) => {
-  /*   if (req.isAuthenticated()) { */
+    if (req.isAuthenticated()) {
   db.collection("users")
     .find({
       email: req.body.email,
@@ -148,17 +166,16 @@ app.get("/admin", (req, res) => {
         ? res.send({ error: true, respuesta: error })
         : res.send({ error: false, respuesta: datos });
     });
-  /*   } else {
+    } else {
     res.send({
       mensaje:
         "No se puede acceder a los datos de administrador sin iniciar sesión",
     });
-  } */
+  }
 });
 
 app.post("/admin/create", (req, res) => {
-  // Aqui es recomendable añadir la encriptación del password con BCrypt
-  /*   if (req.isAuthenticated()) { */
+    if (req.isAuthenticated()) {
   db.collection("users")
     .find({ email: req.body.email })
     .toArray(function (err, user) {
@@ -193,15 +210,15 @@ app.post("/admin/create", (req, res) => {
         res.send({ mensaje: "Usuario ya registrado" });
       }
     });
-  /*   } else {
+    } else {
     res.send({
       mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
-  } */
+  }
 });
 
 app.put("/admin/edit", (req, res) => {
-  /*   if (req.isAuthenticated()) { */
+    if (req.isAuthenticated()) {
   db.collection("users").updateOne(
     { email: req.body.email },
     {
@@ -229,15 +246,15 @@ app.put("/admin/edit", (req, res) => {
           });
     }
   );
-  /*   } else {
+    } else {
     res.send({
       mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
-  } */
+  }
 });
 
 app.delete("/admin/delete", (req, res) => {
-  /*   if (req.isAuthenticated()) { */
+    if (req.isAuthenticated()) {
   db.collection("users").deleteOne(
     { email: req.body.email },
     {
@@ -265,17 +282,17 @@ app.delete("/admin/delete", (req, res) => {
           });
     }
   );
-  /*   } else {
+    } else {
     res.send({
       mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
-  } */
+  }
 });
 
 //------------------ Rutas de consulta de información
 
 app.get("/admin/company", (req, res) => {
-  /*   if (req.isAuthenticated()) { */
+    if (req.isAuthenticated()) {
   db.collection("users")
     .find()
     .toArray((error, datos) => {
@@ -283,15 +300,15 @@ app.get("/admin/company", (req, res) => {
         ? res.send({ error: true, respuesta: error })
         : res.send({ error: false, respuesta: datos });
     });
-  /*   } else {
+    } else {
     res.send({
       mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
-  } */
+  }
 });
 
 app.post("/admin/user", (req, res) => {
-  /*   if (req.isAuthenticated()) { */
+    if (req.isAuthenticated()) {
   db.collection("users")
     .find({ email: req.body.email })
     .toArray((error, datos) => {
@@ -299,15 +316,15 @@ app.post("/admin/user", (req, res) => {
         ? res.send({ error: true, respuesta: error })
         : res.send({ error: false, respuesta: datos });
     });
-  /*   } else {
+    } else {
     res.send({
       mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
-  } */
+  }
 });
 
 app.post("/admin/departamento", (req, res) => {
-  /*   if (req.isAuthenticated()) { */
+    if (req.isAuthenticated()) {
   db.collection("users")
     .find({ departamento: req.body.departamento })
     .toArray((error, datos) => {
@@ -315,15 +332,15 @@ app.post("/admin/departamento", (req, res) => {
         ? res.send({ error: true, respuesta: error })
         : res.send({ error: false, respuesta: datos });
     });
-  /*   } else {
+    } else {
     res.send({
       mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
-  } */
+  }
 });
 
 app.post("/admin/sede", (req, res) => {
-  /*   if (req.isAuthenticated()) { */
+    if (req.isAuthenticated()) {
   db.collection("users")
     .find({ sede: req.body.sede })
     .toArray((error, datos) => {
@@ -331,17 +348,17 @@ app.post("/admin/sede", (req, res) => {
         ? res.send({ error: true, respuesta: error })
         : res.send({ error: false, respuesta: datos });
     });
-  /*   } else {
+    } else {
     res.send({
       mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
-  } */
+  }
 });
 
 //------------------ Rutas de administración de formaciones:
 
 app.get("/admin/training", (req, res) => {
-  /*   if (req.isAuthenticated()) { */
+    if (req.isAuthenticated()) {
   db.collection("training")
     .find()
     .toArray((error, datos) => {
@@ -349,15 +366,15 @@ app.get("/admin/training", (req, res) => {
         ? res.send({ error: true, respuesta: error })
         : res.send({ error: false, respuesta: datos });
     });
-  /*   } else {
+    } else {
     res.send({
       mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
-  } */
+  }
 });
 
 app.post("/admin/training/create", (req, res) => {
-  /*   if (req.isAuthenticated()) { */
+    if (req.isAuthenticated()) {
   db.collection("training")
     .find({ code: req.body.code })
     .toArray((error, data) => {
@@ -392,15 +409,15 @@ app.post("/admin/training/create", (req, res) => {
         }
       }
     });
-  /*   } else {
+    } else {
     res.send({
       mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
-  } */
+  }
 });
 
 app.put("/admin/training/edit", (req, res) => {
-  /*  if (req.isAuthenticated()) { */
+   if (req.isAuthenticated()) {
   db.collection("training")
     .find({ code: req.body.code })
     .toArray((error, data) => {
@@ -438,15 +455,15 @@ app.put("/admin/training/edit", (req, res) => {
         }
       }
     });
-  /*   } else {
+    } else {
     res.send({
       mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
-  } */
+  }
 });
 
 app.delete("/admin/training/delete", (req, res) => {
-  /*   if (req.isAuthenticated()) { */
+    if (req.isAuthenticated()) {
   db.collection("training")
     .find({ code: req.body.code })
     .toArray((error, data) => {
@@ -484,17 +501,17 @@ app.delete("/admin/training/delete", (req, res) => {
         }
       }
     });
-  /*   } else {
+    } else {
     res.send({
       mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
-  } */
+  }
 });
 
 //------------------ Rutas de administración de eventos:
 
 app.get("/admin/meeting", (req, res) => {
-  /*   if (req.isAuthenticated()) { */
+    if (req.isAuthenticated()) {
   db.collection("meeting")
     .find()
     .toArray((error, datos) => {
@@ -502,15 +519,15 @@ app.get("/admin/meeting", (req, res) => {
         ? res.send({ error: true, respuesta: error })
         : res.send({ error: false, respuesta: datos });
     });
-  /*   } else {
+    } else {
     res.send({
       mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
-  } */
+  }
 });
 
 app.post("/admin/meeting/create", (req, res) => {
-  /*   if (req.isAuthenticated()) { */
+    if (req.isAuthenticated()) {
   db.collection("meeting")
     .find({ code: req.body.code })
     .toArray((error, data) => {
@@ -545,15 +562,15 @@ app.post("/admin/meeting/create", (req, res) => {
         }
       }
     });
-  /*   } else {
+    } else {
     res.send({
       mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
-  } */
+  }
 });
 
 app.put("/admin/meeting/edit", (req, res) => {
-  /*   if (req.isAuthenticated()) { */
+    if (req.isAuthenticated()) {
   db.collection("meeting")
     .find({ code: req.body.code })
     .toArray((error, data) => {
@@ -591,15 +608,15 @@ app.put("/admin/meeting/edit", (req, res) => {
         }
       }
     });
-  /*   } else {
+    } else {
     res.send({
       mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
-  } */
+  }
 });
 
 app.delete("/admin/meeting/delete", (req, res) => {
-  /*   if (req.isAuthenticated()) { */
+    if (req.isAuthenticated()) {
   db.collection("meeting")
     .find({ code: req.body.code })
     .toArray((error, data) => {
@@ -637,11 +654,11 @@ app.delete("/admin/meeting/delete", (req, res) => {
         }
       }
     });
-  /*   } else {
+    } else {
     res.send({
       mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
-  } */
+  }
 });
 
 //------------------ Rutas de administración de vacaciones:
@@ -651,7 +668,7 @@ app.delete("/admin/meeting/delete", (req, res) => {
 /* --------------------------------------------------------------------------------------------------- */
 
 app.get("/user", (req, res) => {
-  /*   if (req.isAuthenticated()) { */
+    if (req.isAuthenticated()) {
   db.collection("users")
     .find({
       email: req.body.email,
@@ -662,15 +679,15 @@ app.get("/user", (req, res) => {
         ? res.send({ error: true, respuesta: error })
         : res.send({ error: false, respuesta: datos });
     });
-  /*   } else {
+    } else {
     res.send({
       mensaje: "No se puede acceder a los datos de usuario sin iniciar sesión",
     });
-  } */
+  }
 });
 
 app.put("/user/edit", (req, res) => {
-  /*   if (req.isAuthenticated()) { */
+    if (req.isAuthenticated()) {
   db.collection("users").updateOne(
     { email: req.body.email },
     {
@@ -698,15 +715,15 @@ app.put("/user/edit", (req, res) => {
           });
     }
   );
-  /*   } else {
+    } else {
     res.send({
       mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
-  } */
+  }
 });
 
 app.delete("/user/delete", (req, res) => {
-  /*   if (req.isAuthenticated()) { */
+    if (req.isAuthenticated()) {
   db.collection("users").deleteOne(
     { email: req.body.email },
     {
@@ -734,20 +751,18 @@ app.delete("/user/delete", (req, res) => {
           });
     }
   );
-  /*   } else {
+    } else {
     res.send({
       mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
-  } */
+  }
 });
 
 app.get("/training", (req, res) => {
   db.collection("training")
     .find()
     .toArray((error, datos) => {
-      error
-      ? res.send(error)
-      : res.send(datos)
+      error ? res.send(error) : res.send(datos);
     });
 });
 
@@ -755,9 +770,7 @@ app.get("/meeting", (req, res) => {
   db.collection("meeting")
     .find()
     .toArray((error, datos) => {
-      error
-        ? res.send(error)
-        : res.send(datos);
+      error ? res.send(error) : res.send(datos);
     });
 });
 
