@@ -13,9 +13,10 @@ import FormControl from "react-bootstrap/FormControl";
 function UserEdit(props) {
   let [inputNombre, setInputNombre] = useState("");
   let [inputApellido, setInputApellido] = useState("");
+  let [inputFoto, setInputFoto] = useState("");
   let [userEdit, setUserEdit] = useState({});
 
-  const cambiarUser = () => {
+  const editarUser = () => {
     fetch("http://localhost:3001/user/edit", {
       method: "PUT",
       headers: {
@@ -29,7 +30,23 @@ function UserEdit(props) {
       credentials: "include",
     })
       .then((res) => res.json())
-      .then((data) => setUserEdit(data));
+      .then((data) => {setUserEdit(data) ; setInputNombre(""); setInputApellido("")});
+  };
+
+  const editarFoto = () => {
+    fetch("http:localhost:3001/user/editFoto", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: props.loginData.user.email,
+        foto: inputFoto,
+      }),
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => {setUserEdit(data) ; setInputFoto("")});
   };
 
   return (
@@ -37,7 +54,7 @@ function UserEdit(props) {
       <Container className={"user"}>
         <Row>
           <Col xs sm md lg xl={4}>
-            <Card style={{ width: "20rem" }}>
+            <Card className={"card"} style={{ width: "20rem" }}>
               <Card.Img variant="top" src={props.loginData.user.foto} />
               <Card.Body>
                 <Card.Title>¡Hola, {props.loginData.user.nombre}!</Card.Title>
@@ -63,13 +80,14 @@ function UserEdit(props) {
             </Card>
           </Col>
           <Col xs sm md lg xl={8}>
-            <Card style={{ width: "50rem" }}>
+            <Card style={{ width: "40rem" }}>
               <Card.Body>
                 <Card.Text>
                   <Container>
                     <Row>
-                      <Col xs sm md lg xl={4}>
-                        <h4>Modifica tus datos:</h4>
+                      <Col xs sm md lg xl={8}>
+                        <Card.Title>Modifica tus datos:</Card.Title>
+                        <p>Introduce los nuevos datos y guárdalos.</p>
                         <InputGroup size="md" className="mb-3">
                           <FormControl
                             type="text"
@@ -86,8 +104,26 @@ function UserEdit(props) {
                             onChange={(e) => setInputApellido(e.target.value)}
                           />
                         </InputGroup>
-                        <Button variant="dark" onClick={cambiarUser}>
+                        <Button variant="dark" onClick={editarUser}>
                           Guardar cambios
+                        </Button>
+                        <p>{userEdit.mensaje}</p>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col xs sm md lg xl={8}>
+                        <Card.Title>Modifica tu foto:</Card.Title>
+                        <p>Introduce la URL de tu nueva foto.</p>
+                        <InputGroup size="md" className="mb-3">
+                          <FormControl
+                            type="text"
+                            value={inputFoto}
+                            placeholder={"Introduce la URL de la imagen"}
+                            onChange={(e) => setInputFoto(e.target.value)}
+                          />
+                        </InputGroup>
+                        <Button variant="dark" onClick={editarFoto}>
+                          Cambiar foto
                         </Button>
                         <p>{userEdit.mensaje}</p>
                       </Col>

@@ -6,7 +6,8 @@ import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
 
-function User(props) {
+function Admin(props) {
+if (props.loginData.user.admin){
   return (
     <>
       <Container className={"user"}>
@@ -15,21 +16,29 @@ function User(props) {
             <Card className={"card"} style={{ width: "20rem" }}>
               <Card.Img variant="top" src={props.loginData.user.foto} />
               <Card.Body>
-                <Card.Title>¡Hola, {props.loginData.user.nombre}!</Card.Title>
+                <Card.Title>Admin</Card.Title>
                 <Card.Text>
-                  Estás en tu perfil, aquí puedes consultar tu información y
-                  modificarla. Selecciona la opción que quieras utilizar:
+                  Estás en el perfil de administrador. Desde aquí puedes crear usuarios, editar usuarios y borrar usuarios.
                 </Card.Text>
               </Card.Body>
               <ListGroup className="list-group-flush">
-                <ListGroupItem>
-                  <Link to="/user/edit">Editar datos de perfil</Link>
+              <ListGroupItem>
+                  <Link to="/admin/edit">Buscar usuarios</Link>
                 </ListGroupItem>
                 <ListGroupItem>
-                  <Link to="/user/training">Formaciones disponibles</Link>
+                  <Link to="/admin/edit">Crear usuarios</Link>
                 </ListGroupItem>
                 <ListGroupItem>
-                  <Link to="/user/meeting">Eventos disponibles</Link>
+                  <Link to="/admin/edit">Editar usuarios</Link>
+                </ListGroupItem>
+                <ListGroupItem>
+                  <Link to="/admin/edit">Eliminar usuarios</Link>
+                </ListGroupItem>
+                <ListGroupItem>
+                  <Link to="/admin/training">Formaciones disponibles</Link>
+                </ListGroupItem>
+                <ListGroupItem>
+                  <Link to="/admin/meeting">Eventos disponibles</Link>
                 </ListGroupItem>
               </ListGroup>
               <Card.Body className="list-group-item-dark">
@@ -64,6 +73,12 @@ function User(props) {
       </Container>
     </>
   );
+} else {
+  return(
+  <h1>No tienes permisos de administrador, inicia sesión</h1>)
 }
 
-export default User;
+  
+}
+
+export default Admin;

@@ -8,6 +8,7 @@ import User from "./User";
 import Training from "./Training";
 import Meeting from "./Meeting";
 import UserEdit from "./UserEdit";
+import Admin from "./Admin";
 
 import "./App.css";
 
@@ -55,6 +56,17 @@ function App() {
           loginData={loginData}
         />
       </Route>
+      <Route exact path="/login">
+        <Cabecera />
+        <Login
+          inputPass={inputPass}
+          inputEmail={inputEmail}
+          setInputEmail={setInputEmail}
+          setInputPass={setInputPass}
+          login={login}
+          loginData={loginData}
+        />
+      </Route>
       <Route exact path="/user">
         <Cabecera />
         <User
@@ -65,6 +77,18 @@ function App() {
           loginData={loginData}
         />
       </Route>
+
+      <Route exact path="/admin">
+        <Cabecera />
+        <Admin
+          training={training}
+          setTraining={setTraining}
+          meeting={meeting}
+          setMeeting={setMeeting}
+          loginData={loginData}
+        />
+      </Route>
+
       <Route path="/user/edit">
         <Cabecera />
         <UserEdit loginData={loginData} />

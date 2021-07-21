@@ -5,7 +5,7 @@ import Navbar from "react-bootstrap/Navbar";
 
 function Cabecera(){
     return(
-        <Navbar bg="primary" expand="lg">
+        <Navbar className={"cabecera"} bg="primary" expand="lg">
         <Navbar.Brand href="#home">@nexusPeople</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

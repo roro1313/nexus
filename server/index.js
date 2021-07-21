@@ -694,8 +694,6 @@ app.put("/user/edit", (req, res) => {
       $set: {
         nombre: req.body.nombre,
         apellido: req.body.apellido,
-        /* foto: req.body.foto, */
-        /* password: req.body.password, */
       },
     },
     function (error, datos) {
@@ -713,6 +711,58 @@ app.put("/user/edit", (req, res) => {
       mensaje: "No se puede acceder a los datos sin iniciar sesión",
     });
   }
+});
+
+app.put("/user/editFoto", (req, res) => {
+  if (req.isAuthenticated()) {
+db.collection("users").updateOne(
+  { email: req.body.email },
+  {
+    $set: {
+      foto: req.body.foto,
+    },
+  },
+  function (error, datos) {
+    error
+      ? res.send({ error: true, contenido: error })
+      : res.send({
+          error: false,
+          mensaje: `Se ha modificado ${datos.modifiedCount} usuario correctamente`,
+          contenido: datos,
+        });
+  }
+);
+  } else {
+  res.send({
+    mensaje: "No se puede acceder a los datos sin iniciar sesión",
+  });
+}
+});
+
+app.put("/user/editPass", (req, res) => {
+  if (req.isAuthenticated()) {
+db.collection("users").updateOne(
+  { email: req.body.email },
+  {
+    $set: {
+      password: req.body.password,
+    },
+  },
+  function (error, datos) {
+    error
+      ? res.send({ error: true, contenido: error })
+      : res.send({
+          error: false,
+          mensaje: `Se ha modificado ${datos.modifiedCount} usuario correctamente`,
+          contenido: datos,
+        });
+  }
+);
+  } else {
+  res.send({
+    mensaje: "No se puede acceder a los datos sin iniciar sesión",
+  });
+}
 });
 
 app.delete("/user/delete", (req, res) => {
