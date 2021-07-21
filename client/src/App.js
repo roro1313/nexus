@@ -1,16 +1,18 @@
-import logo from "./logo.svg";
 import { useState, useEffect } from "react";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 
 import Cabecera from "./Cabecera";
-import Login from "./Login";
-import User from "./User";
 import Training from "./Training";
 import Meeting from "./Meeting";
+import Login from "./Login";
+import User from "./User";
 import UserEdit from "./UserEdit";
 import Admin from "./Admin";
+import AdminEdit from "./AdminEdit";
+import AdminBuscar from "./AdminBuscar";
 
 import "./App.css";
+import Logout from "./Logout";
 
 function App() {
   let [inputEmail, setInputEmail] = useState("");
@@ -77,7 +79,18 @@ function App() {
           loginData={loginData}
         />
       </Route>
-
+      <Route exact path="/user/edit">
+        <Cabecera />
+        <UserEdit loginData={loginData} />
+      </Route>
+      <Route exact path="/user/training">
+        <Cabecera />
+        <Training training={training} />
+      </Route>
+      <Route exact path="/user/meeting">
+        <Cabecera />
+        <Meeting meeting={meeting} />
+      </Route>
       <Route exact path="/admin">
         <Cabecera />
         <Admin
@@ -88,18 +101,23 @@ function App() {
           loginData={loginData}
         />
       </Route>
-
-      <Route path="/user/edit">
+      <Route exact path="/admin/edit">
         <Cabecera />
-        <UserEdit loginData={loginData} />
+        <AdminEdit
+          training={training}
+          setTraining={setTraining}
+          meeting={meeting}
+          setMeeting={setMeeting}
+          loginData={loginData}
+        />
       </Route>
-      <Route path="/user/training">
+      <Route exact path="/admin/find">
         <Cabecera />
-        <Training training={training} />
+        <AdminBuscar loginData={loginData} />
       </Route>
-      <Route path="/user/meeting">
+      <Route exact path="/logout">
         <Cabecera />
-        <Meeting meeting={meeting} />
+        <Logout loginData={loginData} setLoginData={setLoginData} />
       </Route>
     </BrowserRouter>
   );

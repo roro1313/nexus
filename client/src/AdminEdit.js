@@ -10,71 +10,94 @@ import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 
-function UserEdit(props) {
-  let [inputNombre, setInputNombre] = useState("");
-  let [inputApellido, setInputApellido] = useState("");
-  let [inputFoto, setInputFoto] = useState("");
-  let [userEdit, setUserEdit] = useState({});
+function AdminEdit(props) {
+  let [inputNombreEdit, setInputNombreEdit] = useState("");
+  let [inputApellidoEdit, setInputApellidoEdit] = useState("");
+  let [inputPuestoEdit, setInputPuestoEdit] = useState("");
+  let [inputDepartamentoEdit, setInputDepartamentoEdit] = useState("");
+  let [inputSedeEdit, setInputSedeEdit] = useState("");
+  let [inputMovilEdit, setInputMovilEdit] = useState("");
+  let [inputFotoEdit, setInputFotoEdit] = useState("");
+  let [inputEmail, setInputEmail] = useState("");
+  let [resultadoBusqueda, setResultadoBusqueda] = useState("");
+  let [userEdit, setUserEdit] = useState("");
 
   const editarUser = () => {
-    fetch("http://localhost:3001/user/edit", {
+    fetch("http://localhost:3001/admin/edit", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: props.loginData.user.email,
-        nombre: inputNombre,
-        apellido: inputApellido,
+        email: resultadoBusqueda,
+        nombre: inputNombreEdit,
+        apellido: inputApellidoEdit,
       }),
       credentials: "include",
     })
       .then((res) => res.json())
-      .then((data) => {setUserEdit(data) ; setInputNombre(""); setInputApellido("")});
+      .then((data) => {
+        setUserEdit(data);
+        setInputNombreEdit("");
+        setInputApellidoEdit("");
+        setInputPuestoEdit("");
+        setInputDepartamentoEdit("");
+        setInputSedeEdit("");
+        setInputMovilEdit("");
+      });
   };
 
-  const editarFoto = () => {
-    fetch("http:localhost:3001/user/editFoto", {
+  /*   const editarFoto = () => {
+    fetch("http:localhost:3001/admin/editFoto", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         email: props.loginData.user.email,
-        foto: inputFoto,
+        foto: inputFotoEdit,
       }),
       credentials: "include",
     })
       .then((res) => res.json())
-      .then((data) => {setUserEdit(data) ; setInputFoto("")});
-  };
+      .then((data) => {
+        setUserEdit(data);
+        setInputFoto("");
+      });
+  }; */
 
   return (
     <>
       <Container className={"user"}>
         <Row>
-        <Col xs sm md lg xl={4}>
+          <Col xs sm md lg xl={4}>
             <Card className={"card"} style={{ width: "20rem" }}>
               <Card.Img variant="top" src={props.loginData.user.foto} />
               <Card.Body>
-                <Card.Title>¡Hola, {props.loginData.user.nombre}!</Card.Title>
+                <Card.Title>Admin</Card.Title>
                 <Card.Text>
-                  Estás en tu perfil, aquí puedes consultar tu información y
-                  modificarla. Selecciona la opción que quieras utilizar:
+                  Estás en el perfil de administrador. Desde aquí puedes crear
+                  usuarios, editar usuarios y borrar usuarios.
                 </Card.Text>
               </Card.Body>
               <ListGroup className="list-group-flush">
-              <ListGroupItem>
-                  <Link to="/user">Ver datos de perfil</Link>
+                <ListGroupItem>
+                  <Link to="/admin/find">Buscar usuarios</Link>
                 </ListGroupItem>
                 <ListGroupItem>
-                  <Link to="/user/edit">Editar datos de perfil</Link>
+                  <Link to="/admin/create">Crear usuarios</Link>
                 </ListGroupItem>
                 <ListGroupItem>
-                  <Link to="/user/training">Formaciones disponibles</Link>
+                  <Link to="/admin/edit">Editar usuarios</Link>
                 </ListGroupItem>
                 <ListGroupItem>
-                  <Link to="/user/meeting">Eventos disponibles</Link>
+                  <Link to="/admin/delete">Eliminar usuarios</Link>
+                </ListGroupItem>
+                <ListGroupItem>
+                  <Link to="/admin/training">Formaciones disponibles</Link>
+                </ListGroupItem>
+                <ListGroupItem>
+                  <Link to="/admin/meeting">Eventos disponibles</Link>
                 </ListGroupItem>
               </ListGroup>
               <Card.Body className="list-group-item-dark">
@@ -89,22 +112,24 @@ function UserEdit(props) {
                   <Container>
                     <Row>
                       <Col xs sm md lg xl={8}>
-                        <Card.Title>Modifica tus datos:</Card.Title>
+                        <Card.Title>Modificar datos:</Card.Title>
                         <p>Introduce los nuevos datos y guárdalos.</p>
                         <InputGroup size="md" className="mb-3">
                           <FormControl
                             type="text"
-                            value={inputNombre}
+                            value={inputNombreEdit}
                             placeholder={"Introduce tu nuevo nombre"}
-                            onChange={(e) => setInputNombre(e.target.value)}
+                            onChange={(e) => setInputNombreEdit(e.target.value)}
                           />
                         </InputGroup>
                         <InputGroup size="xs" className="mb-3">
                           <FormControl
                             type="text"
-                            value={inputApellido}
+                            value={inputApellidoEdit}
                             placeholder={"Introduce tu nuevo apellido"}
-                            onChange={(e) => setInputApellido(e.target.value)}
+                            onChange={(e) =>
+                              setInputApellidoEdit(e.target.value)
+                            }
                           />
                         </InputGroup>
                         <Button variant="dark" onClick={editarUser}>
@@ -115,19 +140,19 @@ function UserEdit(props) {
                     </Row>
                     <Row>
                       <Col xs sm md lg xl={8}>
-                        <Card.Title>Modifica tu foto:</Card.Title>
+                        {/* <Card.Title>Modificar foto:</Card.Title>
                         <p>Introduce la URL de tu nueva foto.</p>
                         <InputGroup size="md" className="mb-3">
                           <FormControl
                             type="text"
-                            value={inputFoto}
+                            value={inputFotoEdit}
                             placeholder={"Introduce la URL de la imagen"}
-                            onChange={(e) => setInputFoto(e.target.value)}
+                            onChange={(e) => setInputFotoEdit(e.target.value)}
                           />
                         </InputGroup>
                         <Button variant="dark" onClick={editarFoto}>
                           Cambiar foto
-                        </Button>
+                        </Button> */}
                         <p>{userEdit.mensaje}</p>
                       </Col>
                     </Row>
@@ -142,4 +167,4 @@ function UserEdit(props) {
   );
 }
 
-export default UserEdit;
+export default AdminEdit;

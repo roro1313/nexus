@@ -135,7 +135,7 @@ app.all("/api/failed", (req, res) => {
 
 app.post("/logout", (req, res) => {
   req.logOut();
-  res.send({ mensaje: "Sesión cerrada correctamente" });
+  res.send({ logged: false, mensaje: "Sesión cerrada correctamente" });
 });
 
 /* ---------------------------------------------------------------------------------------- */
@@ -313,8 +313,8 @@ app.post("/admin/user", (req, res) => {
     .find({ email: req.body.email })
     .toArray((error, datos) => {
       error
-        ? res.send({ error: true, respuesta: error })
-        : res.send({ error: false, respuesta: datos });
+        ? res.send({ error: true, respuesta: error, mensaje:"Ha habido un error" })
+        : res.send({ error: false, respuesta: datos , mensaje: "Usuario encontrado" });
     });
     } else {
     res.send({

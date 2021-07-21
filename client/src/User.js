@@ -11,7 +11,7 @@ function User(props) {
     <>
       <Container className={"user"}>
         <Row>
-          <Col xs sm md lg xl={4}>
+        <Col xs sm md lg xl={4}>
             <Card className={"card"} style={{ width: "20rem" }}>
               <Card.Img variant="top" src={props.loginData.user.foto} />
               <Card.Body>
@@ -22,6 +22,9 @@ function User(props) {
                 </Card.Text>
               </Card.Body>
               <ListGroup className="list-group-flush">
+              <ListGroupItem>
+                  <Link to="/user">Ver datos de perfil</Link>
+                </ListGroupItem>
                 <ListGroupItem>
                   <Link to="/user/edit">Editar datos de perfil</Link>
                 </ListGroupItem>
