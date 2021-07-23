@@ -10,6 +10,7 @@ import UserEdit from "./UserEdit";
 import Admin from "./Admin";
 import AdminEdit from "./AdminEdit";
 import AdminBuscar from "./AdminBuscar";
+import AdminCrear from "./AdminCrear";
 
 import "./App.css";
 import Logout from "./Logout";
@@ -114,6 +115,10 @@ function App() {
       <Route exact path="/admin/find">
         <Cabecera />
         <AdminBuscar loginData={loginData} />
+      </Route>
+      <Route exact path="/admin/create">
+        <Cabecera />
+        <AdminCrear loginData={loginData} />
       </Route>
       <Route exact path="/logout">
         <Cabecera />
