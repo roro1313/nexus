@@ -298,7 +298,7 @@ app.delete("/admin/delete", (req, res) => {
           ? res.send({ error: true, contenido: error })
           : res.send({
               error: false,
-              mensaje: `Se ha eliminado ${datos.deletedCount} registro correctamente`,
+              mensaje: `Se ha eliminado ${datos.deletedCount} usuario correctamente`,
               contenido: datos,
             });
       }

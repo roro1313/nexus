@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Route, Link } from "react-router-dom";
-
+import "./App.css";
 import Cabecera from "./Cabecera";
 import Training from "./Training";
 import Meeting from "./Meeting";
@@ -11,8 +11,7 @@ import Admin from "./Admin";
 import AdminEdit from "./AdminEdit";
 import AdminBuscar from "./AdminBuscar";
 import AdminCrear from "./AdminCrear";
-
-import "./App.css";
+import AdminBorrar from "./AdminBorrar";
 import Logout from "./Logout";
 
 function App() {
@@ -119,6 +118,10 @@ function App() {
       <Route exact path="/admin/create">
         <Cabecera />
         <AdminCrear loginData={loginData} />
+      </Route>
+      <Route exact path="/admin/delete">
+        <Cabecera />
+        <AdminBorrar loginData={loginData} />
       </Route>
       <Route exact path="/logout">
         <Cabecera />
