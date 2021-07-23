@@ -19,8 +19,35 @@ function AdminEdit(props) {
   let [inputMovilEdit, setInputMovilEdit] = useState("");
   let [inputFotoEdit, setInputFotoEdit] = useState("");
   let [inputEmail, setInputEmail] = useState("");
-  let [resultadoBusqueda, setResultadoBusqueda] = useState("");
-  let [userEdit, setUserEdit] = useState("");
+  let [resultadoBusqueda, setResultadoBusqueda] = useState({});
+  let [feedback, setFeedback] = useState("");
+  let [userEdit, setUserEdit] = useState([]);
+
+  const buscarUser = () => {
+    fetch("http://localhost:3001/admin/user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: inputEmail,
+      }),
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setResultadoBusqueda(data.respuesta[0]);
+        setFeedback(data.mensaje);
+        setInputNombreEdit(data.respuesta[0].nombre);
+        setInputApellidoEdit(data.respuesta[0].apellido);
+        setInputPuestoEdit(data.respuesta[0].puesto);
+        setInputDepartamentoEdit(data.respuesta[0].departamento);
+        setInputSedeEdit(data.respuesta[0].sede);
+        setInputMovilEdit(data.respuesta[0].movil);
+        setInputFotoEdit(data.respuesta[0].foto);
+
+      });
+  };
 
   const editarUser = () => {
     fetch("http://localhost:3001/admin/edit", {
@@ -29,9 +56,13 @@ function AdminEdit(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: resultadoBusqueda,
+        email: inputEmail,
         nombre: inputNombreEdit,
         apellido: inputApellidoEdit,
+        puesto: inputPuestoEdit,
+        departamento: inputDepartamentoEdit,
+        sede: inputSedeEdit,
+        movil: inputMovilEdit,
       }),
       credentials: "include",
     })
@@ -47,14 +78,14 @@ function AdminEdit(props) {
       });
   };
 
-  /*   const editarFoto = () => {
+  const editarFoto = () => {
     fetch("http:localhost:3001/admin/editFoto", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: props.loginData.user.email,
+        email: resultadoBusqueda.email,
         foto: inputFotoEdit,
       }),
       credentials: "include",
@@ -62,9 +93,9 @@ function AdminEdit(props) {
       .then((res) => res.json())
       .then((data) => {
         setUserEdit(data);
-        setInputFoto("");
+        setInputFotoEdit("");
       });
-  }; */
+  };
 
   return (
     <>
@@ -72,7 +103,7 @@ function AdminEdit(props) {
         <Row>
           <Col xs sm md lg xl={4}>
             <Card className={"card"} style={{ width: "20rem" }}>
-              <Card.Img variant="top" src={props.loginData.user.foto} />
+              {/* <Card.Img variant="top" src={props.loginData.user.foto} /> */}
               <Card.Body>
                 <Card.Title>Admin</Card.Title>
                 <Card.Text>
@@ -113,12 +144,24 @@ function AdminEdit(props) {
                     <Row>
                       <Col xs sm md lg xl={8}>
                         <Card.Title>Modificar datos:</Card.Title>
-                        <p>Introduce los nuevos datos y guárdalos.</p>
+                        <p>¿De qué usuario quieres cambiar los datos?</p>
+                        <InputGroup size="md" className="mb-3">
+                          <FormControl
+                            type="text"
+                            value={inputEmail}
+                            placeholder={"Introduce email del usuario"}
+                            onChange={(e) => setInputEmail(e.target.value)}
+                          />
+                        </InputGroup>
+                        <Button variant="dark" onClick={buscarUser}>
+                          Buscar usuario
+                        </Button>
+                        <p>{feedback}</p>
+                        <p>Ahora, introduce los nuevos datos y guárdalos.</p>
                         <InputGroup size="md" className="mb-3">
                           <FormControl
                             type="text"
                             value={inputNombreEdit}
-                            placeholder={"Introduce tu nuevo nombre"}
                             onChange={(e) => setInputNombreEdit(e.target.value)}
                           />
                         </InputGroup>
@@ -126,22 +169,44 @@ function AdminEdit(props) {
                           <FormControl
                             type="text"
                             value={inputApellidoEdit}
-                            placeholder={"Introduce tu nuevo apellido"}
                             onChange={(e) =>
                               setInputApellidoEdit(e.target.value)
                             }
                           />
                         </InputGroup>
+                        <InputGroup size="xs" className="mb-3">
+                          <FormControl
+                            type="text"
+                            value={inputPuestoEdit}
+                            onChange={(e) => setInputPuestoEdit(e.target.value)}
+                          />
+                        </InputGroup>
+                        <InputGroup size="xs" className="mb-3">
+                          <FormControl
+                            type="text"
+                            value={inputDepartamentoEdit}
+                            onChange={(e) =>
+                              setInputDepartamentoEdit(e.target.value)
+                            }
+                          />
+                        </InputGroup>
+                        <InputGroup size="xs" className="mb-3">
+                          <FormControl
+                            type="text"
+                            value={inputMovilEdit}
+                            onChange={(e) => setInputMovilEdit(e.target.value)}
+                          />
+                        </InputGroup>
                         <Button variant="dark" onClick={editarUser}>
-                          Guardar cambios
+                          Guardar todos los cambios
                         </Button>
                         <p>{userEdit.mensaje}</p>
                       </Col>
                     </Row>
                     <Row>
                       <Col xs sm md lg xl={8}>
-                        {/* <Card.Title>Modificar foto:</Card.Title>
-                        <p>Introduce la URL de tu nueva foto.</p>
+                        <Card.Title>Modificar foto:</Card.Title>
+                        <p>Introduce la URL de la nueva foto.</p>
                         <InputGroup size="md" className="mb-3">
                           <FormControl
                             type="text"
@@ -152,8 +217,8 @@ function AdminEdit(props) {
                         </InputGroup>
                         <Button variant="dark" onClick={editarFoto}>
                           Cambiar foto
-                        </Button> */}
-                        <p>{userEdit.mensaje}</p>
+                        </Button>
+                        <p>{feedback.mensaje}</p>
                       </Col>
                     </Row>
                   </Container>
