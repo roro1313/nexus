@@ -202,7 +202,10 @@ app.post("/admin/create", (req, res) => {
                 console.log(err);
                 res.send({ mensaje: "Ha habido un error: " + err });
               } else {
-                res.send({ mensaje: "Datos registrados correctamente" , datos: resp});
+                res.send({
+                  mensaje: "Datos registrados correctamente",
+                  datos: resp,
+                });
               }
             }
           );
