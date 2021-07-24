@@ -45,20 +45,13 @@ function User(props) {
               <Card.Body>
                 <Card.Title>Datos del perfil:</Card.Title>
                 <Card.Text>
-                  <p><strong>Nombre:</strong></p>
-                  <p>{props.loginData.user.nombre}</p>
-                  <p><strong>Apellido:</strong></p>
-                  <p>{props.loginData.user.apellido}</p>
-                  <p><strong>Sede:</strong></p>
-                  <p>{props.loginData.user.sede}</p>
-                  <p><strong>Departamento:</strong></p>
-                  <p>{props.loginData.user.departamento}</p>
-                  <p><strong>Puesto:</strong></p>
-                  <p>{props.loginData.user.puesto}</p>
-                  <p><strong>Teléfono móvil:</strong></p>
-                  <p>{props.loginData.user.telefono}</p>
-                  <p><strong>Email corporativo:</strong></p>
-                  <p>{props.loginData.user.email}</p>
+                  <p><strong>Nombre: </strong>{props.loginData.user.nombre}</p>
+                  <p><strong>Apellido: </strong>{props.loginData.user.apellido}</p>
+                  <p><strong>Sede: </strong>{props.loginData.user.sede}</p>
+                  <p><strong>Departamento: </strong>{props.loginData.user.departamento}</p>
+                  <p><strong>Puesto: </strong>{props.loginData.user.puesto}</p>
+                  <p><strong>Teléfono móvil: </strong>{props.loginData.user.telefono}</p>
+                  <p><strong>Email corporativo: </strong>{props.loginData.user.email}</p>
                 </Card.Text>
               </Card.Body>
             </Card>
