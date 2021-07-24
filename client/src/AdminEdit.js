@@ -162,6 +162,7 @@ function AdminEdit(props) {
                           <FormControl
                             type="text"
                             value={inputNombreEdit}
+                            placeholder={"Nombre"}
                             onChange={(e) => setInputNombreEdit(e.target.value)}
                           />
                         </InputGroup>
@@ -169,6 +170,7 @@ function AdminEdit(props) {
                           <FormControl
                             type="text"
                             value={inputApellidoEdit}
+                            placeholder={"Apellido"}
                             onChange={(e) =>
                               setInputApellidoEdit(e.target.value)
                             }
@@ -178,6 +180,7 @@ function AdminEdit(props) {
                           <FormControl
                             type="text"
                             value={inputPuestoEdit}
+                            placeholder={"Puesto"}
                             onChange={(e) => setInputPuestoEdit(e.target.value)}
                           />
                         </InputGroup>
@@ -185,6 +188,7 @@ function AdminEdit(props) {
                           <FormControl
                             type="text"
                             value={inputDepartamentoEdit}
+                            placeholder={"Departamento"}
                             onChange={(e) =>
                               setInputDepartamentoEdit(e.target.value)
                             }
@@ -193,7 +197,18 @@ function AdminEdit(props) {
                         <InputGroup size="xs" className="mb-3">
                           <FormControl
                             type="text"
+                            value={inputSedeEdit}
+                            placeholder={"Sede"}
+                            onChange={(e) =>
+                              setInputSedeEdit(e.target.value)
+                            }
+                          />
+                        </InputGroup>
+                        <InputGroup size="xs" className="mb-3">
+                          <FormControl
+                            type="text"
                             value={inputMovilEdit}
+                            placeholder={"Móvil"}
                             onChange={(e) => setInputMovilEdit(e.target.value)}
                           />
                         </InputGroup>
