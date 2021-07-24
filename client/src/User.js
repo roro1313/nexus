@@ -3,8 +3,7 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Card from "react-bootstrap/Card";
-import ListGroup from "react-bootstrap/ListGroup";
-import ListGroupItem from "react-bootstrap/ListGroupItem";
+import UserMenu from "./UserMenu";
 
 function User(props) {
   return (
@@ -12,33 +11,7 @@ function User(props) {
       <Container className={"user"}>
         <Row>
         <Col xs sm md lg xl={4}>
-            <Card className={"card"} style={{ width: "20rem" }}>
-              <Card.Img variant="top" src={props.loginData.user.foto} />
-              <Card.Body>
-                <Card.Title>¡Hola, {props.loginData.user.nombre}!</Card.Title>
-                <Card.Text>
-                  Estás en tu perfil, aquí puedes consultar tu información y
-                  modificarla. Selecciona la opción que quieras utilizar:
-                </Card.Text>
-              </Card.Body>
-              <ListGroup className="list-group-flush">
-              <ListGroupItem>
-                  <Link to="/user">Ver datos de perfil</Link>
-                </ListGroupItem>
-                <ListGroupItem>
-                  <Link to="/user/edit">Editar datos de perfil</Link>
-                </ListGroupItem>
-                <ListGroupItem>
-                  <Link to="/user/training">Formaciones disponibles</Link>
-                </ListGroupItem>
-                <ListGroupItem>
-                  <Link to="/user/meeting">Eventos disponibles</Link>
-                </ListGroupItem>
-              </ListGroup>
-              <Card.Body className="list-group-item-dark">
-                <Link to="/logout">Cerrar sesión</Link>
-              </Card.Body>
-            </Card>
+            <UserMenu loginData={props.loginData} />
           </Col>
           <Col xs sm md lg xl={8}>
             <Card style={{ width: "40rem" }}>
