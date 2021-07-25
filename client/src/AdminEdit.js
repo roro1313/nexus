@@ -78,7 +78,7 @@ function AdminEdit(props) {
   };
 
   const editarFoto = () => {
-    fetch("http:localhost:3001/admin/editFoto", {
+    fetch("http://localhost:3001/admin/editFoto", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
