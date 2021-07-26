@@ -15,7 +15,7 @@ function Training(props) {
             </Card.Subtitle>
             <Card.Text>{formacion.descripcion}</Card.Text>
             <Card.Text>{formacion.asistentes}</Card.Text>
-            <Card.Link href="#">Inscríbete</Card.Link>
+            {/* <Card.Link href="#">Inscríbete</Card.Link> */}
           </Card.Body>
         </Card>
       </>
