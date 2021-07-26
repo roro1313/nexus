@@ -415,13 +415,13 @@ app.post("/admin/departamento", (req, res) => {
             res.send({
               error: false,
               respuesta: datos,
-              mensaje: "Usuario encontrado",
+              mensaje: "Departamento encontrado",
             });
           } else {
             res.send({
               error: false,
               respuesta: datos,
-              mensaje: "Usuario no encontrado",
+              mensaje: "Departamento no encontrado",
             });
           }
         }
@@ -449,13 +449,13 @@ app.post("/admin/sede", (req, res) => {
             res.send({
               error: false,
               respuesta: datos,
-              mensaje: "Usuario encontrado",
+              mensaje: "Sede encontrada",
             });
           } else {
             res.send({
               error: false,
               respuesta: datos,
-              mensaje: "Usuario no encontrado",
+              mensaje: "Sede no encontrada",
             });
           }
         }
@@ -881,7 +881,7 @@ app.put("/user/editFoto", (req, res) => {
           ? res.send({ error: true, contenido: error })
           : res.send({
               error: false,
-              mensaje: `Se ha modificado ${datos.modifiedCount} usuario correctamente`,
+              mensaje: `Se ha modificado ${datos.modifiedCount} imagen correctamente`,
               contenido: datos,
             });
       }
