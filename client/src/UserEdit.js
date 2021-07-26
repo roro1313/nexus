@@ -131,8 +131,8 @@ function UserEdit(props) {
                           variant="top"
                           src={inputFoto}
                         />
-                        <Button variant="dark" onClick={editarFoto}>
-                          Cambiar foto
+                        <Button className={"redondo"} variant="dark" onClick={editarFoto}>
+                        🖊️
                         </Button>
                         <p>{feedbackFoto}</p>
                       </Col>

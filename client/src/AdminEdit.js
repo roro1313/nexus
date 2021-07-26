@@ -202,8 +202,8 @@ function AdminEdit(props) {
                           />
                         </InputGroup>
                         <Card.Img className={"imagen"} variant="top" src={inputFotoEdit} />
-                        <Button variant="dark" onClick={editarFoto}>
-                          Cambiar foto
+                        <Button className={"redondo"} variant="dark" onClick={editarFoto}>
+                        🖊️
                         </Button>
                         <p>{feedbackFoto}</p>
                       </Col>
