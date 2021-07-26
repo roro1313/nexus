@@ -97,19 +97,19 @@ function App() {
         />
       </Route>
       <Route exact path="/admin/edit">
-        <AdminEdit loginData={loginData} />
+        <AdminEdit loginData={loginData} setLoginData={setLoginData}/>
       </Route>
       <Route exact path="/admin/inscripcion">
         {/* <AdminInscripcion loginData={loginData} training={training} /> */}
       </Route>
       <Route exact path="/admin/find">
-        <AdminBuscar loginData={loginData} />
+        <AdminBuscar loginData={loginData} setLoginData={setLoginData}/>
       </Route>
       <Route exact path="/admin/create">
-        <AdminCrear loginData={loginData} />
+        <AdminCrear loginData={loginData} setLoginData={setLoginData}/>
       </Route>
       <Route exact path="/admin/delete">
-        <AdminBorrar loginData={loginData} />
+        <AdminBorrar loginData={loginData} setLoginData={setLoginData}/>
       </Route>
       <Route exact path="/logout">
         <Logout loginData={loginData} setLoginData={setLoginData} />
