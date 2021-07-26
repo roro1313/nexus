@@ -259,6 +259,7 @@ app.put("/admin/editFoto", (req, res) => {
         $set: {
           foto: req.body.foto,
         },
+      },
         function(error, datos) {
           error
             ? res.send({ error: true, contenido: error })
@@ -268,7 +269,6 @@ app.put("/admin/editFoto", (req, res) => {
                 contenido: datos,
               });
         },
-      }
     );
   } else {
     res.send({
@@ -480,6 +480,48 @@ app.put("/admin/training/edit", (req, res) => {
                   : res.send({
                       error: false,
                       mensaje: `Se ha modificado ${datos.modifiedCount} formación correctamente`,
+                      contenido: datos,
+                    });
+              }
+            );
+          }
+        }
+      });
+  } else {
+    res.send({
+      mensaje: "No se puede acceder a los datos sin iniciar sesión",
+    });
+  }
+});
+
+app.put("/admin/training/sign", (req, res) => {
+  if (req.isAuthenticated()) {
+    db.collection("training")
+      .find({ code: req.body.code })
+      .toArray((error, data) => {
+        if (error) {
+          res.send({ error: true, contenido: error });
+        } else {
+          if (data.length === 0) {
+            res.send({
+              error: false,
+              mensaje:
+                "El código de formación no existe, prueba de nuevo con otro código",
+            });
+          } else {
+            db.collection("training").updateOne(
+              { code: req.body.code },
+              {
+                $set: {
+                  asistentes: req.body.asistentes,
+                },
+              },
+              function (error, datos) {
+                error
+                  ? res.send({ error: true, contenido: error })
+                  : res.send({
+                      error: false,
+                      mensaje: `Se ha añadido ${datos.modifiedCount} asistente correctamente`,
                       contenido: datos,
                     });
               }
