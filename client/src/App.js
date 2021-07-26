@@ -12,6 +12,7 @@ import AdminEdit from "./AdminEdit";
 import AdminBuscar from "./AdminBuscar";
 import AdminCrear from "./AdminCrear";
 import AdminBorrar from "./AdminBorrar";
+import AdminInscripcion from "./AdminInscripcion";
 import Logout from "./Logout";
 
 function App() {
@@ -47,9 +48,9 @@ function App() {
 
   return (
     <BrowserRouter>
+    <Cabecera loginData={loginData} />
       <Route exact path="/">
-        <Cabecera />
-        <Login
+              <Login
           inputPass={inputPass}
           inputEmail={inputEmail}
           setInputEmail={setInputEmail}
@@ -59,7 +60,6 @@ function App() {
         />
       </Route>
       <Route exact path="/login">
-        <Cabecera />
         <Login
           inputPass={inputPass}
           inputEmail={inputEmail}
@@ -70,7 +70,6 @@ function App() {
         />
       </Route>
       <Route exact path="/user">
-        <Cabecera />
         <User
           training={training}
           setTraining={setTraining}
@@ -80,19 +79,15 @@ function App() {
         />
       </Route>
       <Route exact path="/user/edit">
-        <Cabecera />
-        <UserEdit loginData={loginData} />
+        <UserEdit loginData={loginData} setLoginData={setLoginData} />
       </Route>
       <Route exact path="/user/training">
-        <Cabecera />
         <Training training={training} />
       </Route>
       <Route exact path="/user/meeting">
-        <Cabecera />
         <Meeting meeting={meeting} />
       </Route>
       <Route exact path="/admin">
-        <Cabecera />
         <Admin
           training={training}
           setTraining={setTraining}
@@ -102,29 +97,21 @@ function App() {
         />
       </Route>
       <Route exact path="/admin/edit">
-        <Cabecera />
-        <AdminEdit
-          training={training}
-          setTraining={setTraining}
-          meeting={meeting}
-          setMeeting={setMeeting}
-          loginData={loginData}
-        />
+        <AdminEdit loginData={loginData} />
+      </Route>
+      <Route exact path="/admin/inscripcion">
+        {/* <AdminInscripcion loginData={loginData} training={training} /> */}
       </Route>
       <Route exact path="/admin/find">
-        <Cabecera />
         <AdminBuscar loginData={loginData} />
       </Route>
       <Route exact path="/admin/create">
-        <Cabecera />
         <AdminCrear loginData={loginData} />
       </Route>
       <Route exact path="/admin/delete">
-        <Cabecera />
         <AdminBorrar loginData={loginData} />
       </Route>
       <Route exact path="/logout">
-        <Cabecera />
         <Logout loginData={loginData} setLoginData={setLoginData} />
       </Route>
     </BrowserRouter>
