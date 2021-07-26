@@ -15,7 +15,9 @@ import AdminBorrar from "./AdminBorrar";
 import AdminInscripcion from "./AdminInscripcion";
 import Logout from "./Logout";
 
+
 function App() {
+  const url = "http://localhost:3001"
   let [inputEmail, setInputEmail] = useState("");
   let [inputPass, setInputPass] = useState("");
   let [loginData, setLoginData] = useState({ logged: false });
@@ -24,7 +26,7 @@ function App() {
   let [meeting, setMeeting] = useState([]);
 
   function login() {
-    fetch("http://localhost:3001/login", {
+    fetch(`${url}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -79,7 +81,7 @@ function App() {
         />
       </Route>
       <Route exact path="/user/edit">
-        <UserEdit loginData={loginData} setLoginData={setLoginData} />
+        <UserEdit loginData={loginData} setLoginData={setLoginData} url={url}/>
       </Route>
       <Route exact path="/user/training">
         <Training training={training} />
@@ -94,26 +96,34 @@ function App() {
           meeting={meeting}
           setMeeting={setMeeting}
           loginData={loginData}
+          url={url}
         />
       </Route>
       <Route exact path="/admin/edit">
-        <AdminEdit loginData={loginData} setLoginData={setLoginData}/>
+        <AdminEdit loginData={loginData} setLoginData={setLoginData} url={url}/>
       </Route>
       <Route exact path="/admin/inscripcion">
-        {/* <AdminInscripcion loginData={loginData} training={training} /> */}
+        <AdminInscripcion loginData={loginData} /* training={training} */ url={url}/>
       </Route>
       <Route exact path="/admin/find">
-        <AdminBuscar loginData={loginData} setLoginData={setLoginData}/>
+        <AdminBuscar loginData={loginData} setLoginData={setLoginData} url={url}/>
       </Route>
       <Route exact path="/admin/create">
-        <AdminCrear loginData={loginData} setLoginData={setLoginData}/>
+        <AdminCrear loginData={loginData} setLoginData={setLoginData} url={url}/>
       </Route>
       <Route exact path="/admin/delete">
-        <AdminBorrar loginData={loginData} setLoginData={setLoginData}/>
+        <AdminBorrar loginData={loginData} setLoginData={setLoginData} url={url}/>
       </Route>
       <Route exact path="/logout">
-        <Logout loginData={loginData} setLoginData={setLoginData} />
+        <Logout loginData={loginData} setLoginData={setLoginData} url={url} />
       </Route>
+{/*       <Route exact path="/admin/training">
+      <AdminInscripcion loginData={loginData} training={training} />
+        <Training training={training} />
+      </Route>
+      <Route exact path="/admin/meeting">
+        <Meeting meeting={meeting} />
+      </Route> */}
     </BrowserRouter>
   );
 }

@@ -14,7 +14,7 @@ function AdminBorrar(props) {
   let [feedback, setFeedback] = useState("");
 
   const borrarUser = () => {
-    fetch("http://localhost:3001/admin/delete", {
+    fetch(`${props.url}/admin/delete`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

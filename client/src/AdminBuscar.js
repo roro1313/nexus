@@ -22,7 +22,7 @@ function AdminBuscar(props) {
 
   const buscarUser = () => {
     setFeedbackUser("");
-    fetch("http://localhost:3001/admin/user", {
+    fetch(`${props.url}/admin/user`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,7 +44,7 @@ function AdminBuscar(props) {
   const buscarDep = () => {
     setInputDepartamento("");
     setFeedbackDep("");
-    fetch("http://localhost:3001/admin/departamento", {
+    fetch(`${props.url}/admin/departamento`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -63,7 +63,7 @@ function AdminBuscar(props) {
   const buscarSede = () => {
     setInputSede("");
     setFeedbackSede("");
-    fetch("http://localhost:3001/admin/sede", {
+    fetch(`${props.url}/admin/sede`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

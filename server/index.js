@@ -592,18 +592,28 @@ app.put("/admin/training/sign", (req, res) => {
             db.collection("training").updateOne(
               { code: req.body.code },
               {
-                $set: {
-                  asistentes: req.body.asistentes,
+                $push: {
+                  asistentes: {
+                    nombre: req.body.nombre,
+                  },
                 },
               },
               function (error, datos) {
-                error
-                  ? res.send({ error: true, contenido: error })
-                  : res.send({
-                      error: false,
-                      mensaje: `Se ha añadido ${datos.modifiedCount} asistente correctamente`,
-                      contenido: datos,
+                if (error) {
+                  res.send({ error: true, contenido: error });
+                } else {
+                  db.collection("training")
+                    .find()
+                    .toArray((error, datos) => {
+                      error
+                        ? res.send({ error: true, respuesta: error })
+                        : res.send({
+                            error: false,
+                            mensaje: `Se ha añadido correctamente`,
+                            contenido: datos,
+                          });
                     });
+                }
               }
             );
           }

@@ -19,7 +19,7 @@ function UserEdit(props) {
   let [feedbackFoto, setFeedbackFoto] = useState("");
 
   const editarUser = () => {
-    fetch("http://localhost:3001/user/edit", {
+    fetch(`${props.url}/user/edit`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -39,8 +39,8 @@ function UserEdit(props) {
         setFeedbackUser(data.mensaje);
       })
       .then(
-        fetch("http://localhost:3001/perfil", {
-          method: "PUT",
+        fetch(`${props.url}/perfil`, {
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
@@ -57,7 +57,7 @@ function UserEdit(props) {
   };
 
   const editarFoto = () => {
-    fetch("http://localhost:3001/user/editFoto", {
+    fetch(`${props.url}/user/editFoto`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

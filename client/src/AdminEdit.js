@@ -25,7 +25,7 @@ function AdminEdit(props) {
   let [userEdit, setUserEdit] = useState([]);
 
   const buscarUser = () => {
-    fetch("http://localhost:3001/admin/user", {
+    fetch(`${props.url}/admin/user`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -51,7 +51,7 @@ function AdminEdit(props) {
   };
 
   const editarUser = () => {
-    fetch("http://localhost:3001/admin/edit", {
+    fetch(`${props.url}/admin/edit`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -81,7 +81,7 @@ function AdminEdit(props) {
   };
 
   const editarFoto = () => {
-    fetch("http://localhost:3001/admin/editFoto", {
+    fetch(`${props.url}/admin/editFoto`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

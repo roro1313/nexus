@@ -32,7 +32,7 @@ function AdminCrear(props) {
   };
 
   const crearUser = () => {
-    fetch("http://localhost:3001/admin/create", {
+    fetch(`${props.url}/admin/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

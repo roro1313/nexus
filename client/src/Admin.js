@@ -9,11 +9,11 @@ function Admin(props) {
     return (
       <>
         <Container className={"user"}>
-          <Row>
-            <Col xs sm md lg xl={4}>
+          <Row xs sm md lg xl={12}>
+            <Col xs={12} sm={12} md={12} lg xl={4}>
               <AdminMenu loginData={props.loginData} />
             </Col>
-            <Col xs sm md lg xl={8}>
+            <Col xs={12} sm={12} md={12} lg xl={8}>
               <Card style={{ width: "40rem" }}>
                 <Card.Body>
                   <Card.Title>Datos del perfil:</Card.Title>
