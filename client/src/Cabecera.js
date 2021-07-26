@@ -23,8 +23,9 @@ function Cabecera(props) {
             <Nav.Link href="/">Inicio</Nav.Link>
             <Nav.Link href="/about">Acerca de</Nav.Link>
           </Nav>
+          <Nav.Link href="#">¡Hola, {props.loginData.user.nombre}!</Nav.Link>
           <img
-            className={"imagenCabecera"}
+            className="imagenCabecera"
             src={props.loginData.user.foto}
           ></img>
         </Container>
@@ -52,27 +53,6 @@ function Cabecera(props) {
       </Navbar>
     );
   }
-
-  /*     return(
-      <Navbar sticky="top" className={"cabecera"} bg="dark" variant="dark">
-      <Container>
-        <Navbar.Brand href="/">
-          <img
-            alt="Logo nexus"
-            src={logo40}
-            width="50"
-            height="50"
-            className="d-inline-block align-top"
-          />
-        </Navbar.Brand>
-        <Nav className="mr-auto">
-            <Nav.Link href="/">Inicio</Nav.Link>
-            <Nav.Link href="/about">Acerca de</Nav.Link>
-          </Nav>
-           <Nav.Link href="/login">Iniciar sesión</Nav.Link>
-      </Container>
-    </Navbar>
-    )  */
 }
 
 export default Cabecera;
