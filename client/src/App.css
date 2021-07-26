@@ -35,7 +35,24 @@
 .cabecera {
   margin-bottom: 2em;
 }
+.imagenCabecera {
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+  border: #40ebcb;
+  border-style: solid;
+  border-width: 2px;
+}
 
 .usuarios {
   margin-top: 3%;
+}
+
+.imagen {
+  height: 200px;
+  width: 200px;
+  border-radius: 150px;
+  border: #40ebcb;
+  border-style: solid;
+  border-width: 2px;
 }
