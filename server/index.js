@@ -139,13 +139,47 @@ app.post("/logout", (req, res) => {
 });
 
 /* ---------------------------------------------------------------------------------------- */
-/* ------------------------------------ RUTA DE PRUEBA ------------------------------------ */
+/* ------------------------------------ RUTAS DE INFORMACIÓN ------------------------------ */
 /* ---------------------------------------------------------------------------------------- */
 
 app.get("/prueba", (req, res) => {
   req.isAuthenticated()
     ? res.send({ mensaje: "La sesión está iniciada" })
     : res.send({ mensaje: "Sesión no iniciada" });
+});
+
+app.post("/perfil", (req, res) => {
+  if (req.isAuthenticated()) {
+    db.collection("users")
+      .find({ email: req.body.email })
+      .toArray((error, datos) => {
+        if (error) {
+          res.send({
+            error: true,
+            respuesta: error,
+            mensaje: "Ha habido un error",
+          });
+        } else {
+          if (datos.length > 0) {
+            res.send({
+              error: false,
+              respuesta: datos,
+              mensaje: "Usuario encontrado",
+            });
+          } else {
+            res.send({
+              error: false,
+              respuesta: datos,
+              mensaje: "Usuario no encontrado",
+            });
+          }
+        }
+      });
+  } else {
+    res.send({
+      mensaje: "No se puede acceder a los datos sin iniciar sesión",
+    });
+  }
 });
 
 /* --------------------------------------------------------------------------------------------- */
@@ -260,15 +294,15 @@ app.put("/admin/editFoto", (req, res) => {
           foto: req.body.foto,
         },
       },
-        function(error, datos) {
-          error
-            ? res.send({ error: true, contenido: error })
-            : res.send({
-                error: false,
-                mensaje: `Se ha modificado ${datos.modifiedCount} imagen correctamente`,
-                contenido: datos,
-              });
-        },
+      function (error, datos) {
+        error
+          ? res.send({ error: true, contenido: error })
+          : res.send({
+              error: false,
+              mensaje: `Se ha modificado ${datos.modifiedCount} imagen correctamente`,
+              contenido: datos,
+            });
+      }
     );
   } else {
     res.send({
@@ -336,17 +370,27 @@ app.post("/admin/user", (req, res) => {
     db.collection("users")
       .find({ email: req.body.email })
       .toArray((error, datos) => {
-        error
-          ? res.send({
-              error: true,
-              respuesta: error,
-              mensaje: "Ha habido un error",
-            })
-          : res.send({
+        if (error) {
+          res.send({
+            error: true,
+            respuesta: error,
+            mensaje: "Ha habido un error",
+          });
+        } else {
+          if (datos.length > 0) {
+            res.send({
               error: false,
               respuesta: datos,
               mensaje: "Usuario encontrado",
             });
+          } else {
+            res.send({
+              error: false,
+              respuesta: datos,
+              mensaje: "Usuario no encontrado",
+            });
+          }
+        }
       });
   } else {
     res.send({
@@ -360,9 +404,27 @@ app.post("/admin/departamento", (req, res) => {
     db.collection("users")
       .find({ departamento: req.body.departamento })
       .toArray((error, datos) => {
-        error
-          ? res.send({ error: true, respuesta: error })
-          : res.send({ error: false, respuesta: datos });
+        if (error) {
+          res.send({
+            error: true,
+            respuesta: error,
+            mensaje: "Ha habido un error",
+          });
+        } else {
+          if (datos.length > 0) {
+            res.send({
+              error: false,
+              respuesta: datos,
+              mensaje: "Usuario encontrado",
+            });
+          } else {
+            res.send({
+              error: false,
+              respuesta: datos,
+              mensaje: "Usuario no encontrado",
+            });
+          }
+        }
       });
   } else {
     res.send({
@@ -376,9 +438,27 @@ app.post("/admin/sede", (req, res) => {
     db.collection("users")
       .find({ sede: req.body.sede })
       .toArray((error, datos) => {
-        error
-          ? res.send({ error: true, respuesta: error })
-          : res.send({ error: false, respuesta: datos });
+        if (error) {
+          res.send({
+            error: true,
+            respuesta: error,
+            mensaje: "Ha habido un error",
+          });
+        } else {
+          if (datos.length > 0) {
+            res.send({
+              error: false,
+              respuesta: datos,
+              mensaje: "Usuario encontrado",
+            });
+          } else {
+            res.send({
+              error: false,
+              respuesta: datos,
+              mensaje: "Usuario no encontrado",
+            });
+          }
+        }
       });
   } else {
     res.send({
