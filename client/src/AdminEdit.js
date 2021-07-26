@@ -20,6 +20,7 @@ function AdminEdit(props) {
   let [inputEmail, setInputEmail] = useState("");
   let [resultadoBusqueda, setResultadoBusqueda] = useState({});
   let [feedback, setFeedback] = useState("");
+  let [feedbackEdit, setFeedbackEdit] = useState("");
   let [feedbackFoto, setFeedbackFoto] = useState("");
   let [userEdit, setUserEdit] = useState([]);
 
@@ -69,6 +70,7 @@ function AdminEdit(props) {
       .then((res) => res.json())
       .then((data) => {
         setUserEdit(data);
+        setFeedbackEdit(data.mensaje);
         setInputNombreEdit("");
         setInputApellidoEdit("");
         setInputPuestoEdit("");
@@ -184,7 +186,7 @@ function AdminEdit(props) {
                         <Button variant="dark" onClick={editarUser}>
                           Guardar todos los cambios
                         </Button>
-                        <p>{userEdit.mensaje}</p>
+                        <p>{feedbackEdit}</p>
                       </Col>
                     </Row>
                     <Row>
@@ -199,7 +201,7 @@ function AdminEdit(props) {
                             onChange={(e) => setInputFotoEdit(e.target.value)}
                           />
                         </InputGroup>
-                        <Card.Img variant="top" src={inputFotoEdit} />
+                        <Card.Img className={"imagen"} variant="top" src={inputFotoEdit} />
                         <Button variant="dark" onClick={editarFoto}>
                           Cambiar foto
                         </Button>

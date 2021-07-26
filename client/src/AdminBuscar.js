@@ -35,11 +35,11 @@ function AdminBuscar(props) {
     }).then((res) =>
       res.json().then((data) => {
         setResultadoBusquedaUser(data.respuesta);
+        setInputEmailBuscar("");
+        setFeedbackUser(data.mensaje);
       })
     );
-    resultadoBusquedaUser.length === 0
-      ? setFeedbackUser("Usuario no encontrado")
-      : setFeedbackUser("");
+
   };
 
   const buscarDep = () => {
@@ -57,10 +57,8 @@ function AdminBuscar(props) {
       .then((data) => {
         setResultadoBusquedaDep(data.respuesta);
         setInputDepartamento("");
+        setFeedbackDep(data.mensaje);
       });
-      resultadoBusquedaDep.length === 0
-      ? setFeedbackDep("Departamento no encontrado")
-      : setFeedbackDep("");
   };
 
   const buscarSede = () => {
@@ -78,10 +76,8 @@ function AdminBuscar(props) {
       .then((data) => {
         setResultadoBusquedaSede(data.respuesta);
         setInputSede("");
+        setFeedbackSede(data.mensaje);
       });
-      resultadoBusquedaSede.length === 0
-      ? setFeedbackSede("Sede no encontrada")
-      : setFeedbackSede("");
   };
 
   return (
