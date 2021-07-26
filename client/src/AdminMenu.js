@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 function AdminMenu(props){
     return(
         <Card className={"card"} style={{ width: "20rem" }}>
-                <Card.Img variant="top" src={props.loginData.user.foto} />
+                {/* <Card.Img variant="top" src={props.loginData.user.foto} /> */}
                 <Card.Body>
                   <Card.Title>Admin</Card.Title>
                   <Card.Text>
@@ -33,6 +33,9 @@ function AdminMenu(props){
                   </ListGroupItem>
                   <ListGroupItem>
                     <Link to="/admin/meeting">Eventos disponibles</Link>
+                  </ListGroupItem>
+                  <ListGroupItem>
+                    <Link to="/admin/inscripcion">Inscribirse</Link>
                   </ListGroupItem>
                 </ListGroup>
                 <Card.Body className="list-group-item-dark">
