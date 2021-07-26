@@ -165,6 +165,7 @@ function AdminBuscar(props) {
                         <Button variant="dark" onClick={buscarSede}>
                           Buscar por sede
                         </Button>
+                        <p>{feedbackSede}</p>
                       </Col>
                     </Row>
                     <Row>
