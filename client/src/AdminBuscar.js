@@ -20,7 +20,6 @@ function AdminBuscar(props) {
   let [feedbackDep, setFeedbackDep] = useState("");
   let [feedbackSede, setFeedbackSede] = useState("");
 
-  //Revisar el feedback de la búsqueda, solo sale al segundo click del botón
   const buscarUser = () => {
     setFeedbackUser("");
     fetch("http://localhost:3001/admin/user", {
