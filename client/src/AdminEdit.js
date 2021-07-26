@@ -20,6 +20,7 @@ function AdminEdit(props) {
   let [inputEmail, setInputEmail] = useState("");
   let [resultadoBusqueda, setResultadoBusqueda] = useState({});
   let [feedback, setFeedback] = useState("");
+  let [feedbackFoto, setFeedbackFoto] = useState("");
   let [userEdit, setUserEdit] = useState([]);
 
   const buscarUser = () => {
@@ -93,6 +94,7 @@ function AdminEdit(props) {
       .then((data) => {
         setUserEdit(data);
         setInputFotoEdit("");
+        setFeedbackFoto(data.mensaje);
       });
   };
 
@@ -100,16 +102,16 @@ function AdminEdit(props) {
     <>
       <Container className={"user"}>
         <Row>
-          <Col xs sm md lg xl={4}>
+          <Col xs={12} sm={12} md={12} lg xl={8}>
           <AdminMenu loginData={props.loginData}/>
           </Col>
-          <Col xs sm md lg xl={8}>
+          <Col xs={12} sm={12} md={12} lg xl={8}>
             <Card style={{ width: "40rem" }}>
               <Card.Body>
                 <Card.Text>
                   <Container>
                     <Row>
-                      <Col xs sm md lg xl={8}>
+                      <Col xs={12} sm={12} md={12} lg xl={8}>
                         <Card.Title>Modificar datos:</Card.Title>
                         <p>¿De qué usuario quieres cambiar los datos?</p>
                         <InputGroup size="md" className="mb-3">
@@ -197,10 +199,11 @@ function AdminEdit(props) {
                             onChange={(e) => setInputFotoEdit(e.target.value)}
                           />
                         </InputGroup>
+                        <Card.Img variant="top" src={inputFotoEdit} />
                         <Button variant="dark" onClick={editarFoto}>
                           Cambiar foto
                         </Button>
-                        <p>{feedback.mensaje}</p>
+                        <p>{feedbackFoto}</p>
                       </Col>
                     </Row>
                   </Container>

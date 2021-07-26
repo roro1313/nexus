@@ -9,9 +9,9 @@ import FormControl from "react-bootstrap/FormControl";
 import UserMenu from "./UserMenu";
 
 function UserEdit(props) {
-  let [inputNombre, setInputNombre] = useState("");
-  let [inputApellido, setInputApellido] = useState("");
-  let [inputFoto, setInputFoto] = useState("");
+  let [inputNombre, setInputNombre] = useState(props.loginData.user.nombre);
+  let [inputApellido, setInputApellido] = useState(props.loginData.user.apellido);
+  let [inputFoto, setInputFoto] = useState(props.loginData.user.foto);
   let [userEdit, setUserEdit] = useState({});
 
   const editarUser = () => {
@@ -32,7 +32,7 @@ function UserEdit(props) {
   };
 
   const editarFoto = () => {
-    fetch("http:localhost:3001/user/editFoto", {
+    fetch("http://localhost:3001/user/editFoto", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -88,7 +88,7 @@ function UserEdit(props) {
                     <Row>
                       <Col xs sm md lg xl={8}>
                         <Card.Title>Modifica tu foto:</Card.Title>
-                        <p>Introduce la URL de tu nueva foto.</p>
+                        <p>Introduce la URL de tu nueva foto de perfil.</p>
                         <InputGroup size="md" className="mb-3">
                           <FormControl
                             type="text"
@@ -97,6 +97,7 @@ function UserEdit(props) {
                             onChange={(e) => setInputFoto(e.target.value)}
                           />
                         </InputGroup>
+                        <Card.Img variant="top" src={inputFoto} />
                         <Button variant="dark" onClick={editarFoto}>
                           Cambiar foto
                         </Button>
