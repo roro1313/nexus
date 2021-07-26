@@ -10,9 +10,13 @@ import UserMenu from "./UserMenu";
 
 function UserEdit(props) {
   let [inputNombre, setInputNombre] = useState(props.loginData.user.nombre);
-  let [inputApellido, setInputApellido] = useState(props.loginData.user.apellido);
+  let [inputApellido, setInputApellido] = useState(
+    props.loginData.user.apellido
+  );
   let [inputFoto, setInputFoto] = useState(props.loginData.user.foto);
   let [userEdit, setUserEdit] = useState({});
+  let [feedbackUser, setFeedbackUser] = useState("");
+  let [feedbackFoto, setFeedbackFoto] = useState("");
 
   const editarUser = () => {
     fetch("http://localhost:3001/user/edit", {
@@ -28,7 +32,28 @@ function UserEdit(props) {
       credentials: "include",
     })
       .then((res) => res.json())
-      .then((data) => {setUserEdit(data) ; setInputNombre(""); setInputApellido("")});
+      .then((data) => {
+        setUserEdit(data);
+        setInputNombre("");
+        setInputApellido("");
+        setFeedbackUser(data.mensaje);
+      })
+      .then(
+        fetch("http://localhost:3001/perfil", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: props.loginData.user.email,
+          }),
+          credentials: "include",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            props.setLoginData(data);
+          })
+      );
   };
 
   const editarFoto = () => {
@@ -44,15 +69,19 @@ function UserEdit(props) {
       credentials: "include",
     })
       .then((res) => res.json())
-      .then((data) => {setUserEdit(data) ; setInputFoto("")});
+      .then((data) => {
+        setUserEdit(data);
+        setInputFoto("");
+        setFeedbackFoto(data.mensaje);
+      });
   };
 
   return (
     <>
       <Container className={"user"}>
         <Row>
-        <Col xs sm md lg xl={4}>
-        <UserMenu loginData={props.loginData} />
+          <Col xs sm md lg xl={4}>
+            <UserMenu loginData={props.loginData} />
           </Col>
           <Col xs sm md lg xl={8}>
             <Card style={{ width: "40rem" }}>
@@ -82,7 +111,7 @@ function UserEdit(props) {
                         <Button variant="dark" onClick={editarUser}>
                           Guardar cambios
                         </Button>
-                        <p>{userEdit.mensaje}</p>
+                        <p>{feedbackUser}</p>
                       </Col>
                     </Row>
                     <Row>
@@ -97,11 +126,15 @@ function UserEdit(props) {
                             onChange={(e) => setInputFoto(e.target.value)}
                           />
                         </InputGroup>
-                        <Card.Img variant="top" src={inputFoto} />
+                        <Card.Img
+                          className={"imagen"}
+                          variant="top"
+                          src={inputFoto}
+                        />
                         <Button variant="dark" onClick={editarFoto}>
                           Cambiar foto
                         </Button>
-                        <p>{userEdit.mensaje}</p>
+                        <p>{feedbackFoto}</p>
                       </Col>
                     </Row>
                   </Container>
