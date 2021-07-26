@@ -12,7 +12,7 @@ function Tarjeta(props) {
 
   const usuarios = props.resultadoBusqueda.map((user, index) => {
     return (
-      <Card className={"usuarios"} key={index} style={{ width: "13rem" }}>
+      <Card className={"usuarios"} key={index} style={{ width: "15rem" }}>
         <Card.Img variant="top" src={user.foto} />
         <Card.Body>
           <Card.Title>
