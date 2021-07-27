@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Spinner from "react-bootstrap/Spinner";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -6,22 +7,23 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
+import ListGroup from "react-bootstrap/ListGroup";
 import AdminMenu from "./AdminMenu";
-import Training from "./Training";
 
 function AdminInscripcion(props) {
   let [feedback, setFeedback] = useState("");
   let [inputCode, setInputCode] = useState("");
   let [asistentes, setAsistentes] = useState([]);
   let [nuevoAsistente, setNuevoAsistente] = useState("");
-  let [training, setTraining] = useState([]);
 
   useEffect(() => {
-    fetch(`${props.url}/training`)
+    fetch(`${props.url}/admin/training`, {
+      credentials: "include",
+    })
       .then((res) => res.json())
       .then((data) => {
-        setTraining(data.contenido);
-        setAsistentes(data.contenido);
+        console.log(data.respuesta);
+        setAsistentes(data.respuesta);
       });
   }, []);
 
@@ -43,54 +45,83 @@ function AdminInscripcion(props) {
     })
       .then((res) => res.json())
       .then((data) => {
-        setAsistentes(data.contenido);
+        console.log(data.respuesta);
+        setAsistentes(data.respuesta);
         setFeedback(data.mensaje);
-      })
+      });
   };
 
+  const formaciones = asistentes.map((formacion, index) => {
+    return (
+      <Card style={{ width: "23rem" }}>
+        <Card.Body>
+          <Card.Title>{formacion.nombre}</Card.Title>
+          <Card.Subtitle className="mb-2 text-muted">
+            Código de formación: {formacion.code}
+          </Card.Subtitle>
+          <Card.Subtitle className="mb-2 text-muted">
+            {formacion.fecha}, {formacion.hora}, {formacion.lugar}
+          </Card.Subtitle>
+          <Card.Text>{formacion.descripcion}</Card.Text>
+          <Card.Text>Asistentes:</Card.Text>
+          {console.log(formacion.asistentes)}
+
+          {formacion.asistentes !== undefined
+            ? formacion.asistentes.map((form, index) => {
+                return (
+                  <ListGroup.Item variant="secondary">
+                    {form.nombre}
+                  </ListGroup.Item>
+                );
+              })
+            : ""}
+        </Card.Body>
+      </Card>
+    );
+  });
   return (
     <>
-      <Container className={"user"}>
+      <Container /* className={"user"} */>
         <Row>
           <Col xs sm md={12} lg xl={4}>
             <AdminMenu loginData={props.loginData} />
           </Col>
           <Col xs sm md lg xl={8}>
-            <Card style={{ width: "40rem" }}>
-              <Card.Body>
-                <Card.Text>
-                  <Container>
-                    <Row>
-                      <Col xs sm md lg xl={8}>
-                        <Card.Title>Inscríbete a una formación:</Card.Title>
-                        <p>¿Tienes un código de formación?</p>
-                        <InputGroup size="md" className="mb-3">
-                          <FormControl
-                            type="text"
-                            value={inputCode}
-                            placeholder={"Introduce el código de formación"}
-                            onChange={(e) => setInputCode(e.target.value)}
-                          />
-                        </InputGroup>
-                        <InputGroup size="md" className="mb-3">
-                          <FormControl
-                            type="text"
-                            value={nuevoAsistente}
-                            placeholder={"Introduce el nombre del asistente"}
-                            onChange={(e) => setNuevoAsistente(e.target.value)}
-                          />
-                        </InputGroup>
-                        <Button variant="dark" onClick={addAsistente}>
-                          Inscripción
-                        </Button>
-                        <p>{feedback}</p>
-                      </Col>
-                      <Training training={training} />
-                    </Row>
-                  </Container>
-                </Card.Text>
-              </Card.Body>
-            </Card>
+            {/* <Card style={{ width: "40rem" }}> */}
+            <Card.Body>
+              <Card.Text>
+                <Container>
+                  <Row>
+                    <Col xs sm md lg xl={8}>
+                      <Card.Title>Formaciones disponibles:</Card.Title>
+                      <p>¿Quieres inscribirte a alguna?</p>
+                      <InputGroup size="md" className="mb-3">
+                        <FormControl
+                          type="text"
+                          value={inputCode}
+                          placeholder={"Introduce el código de formación"}
+                          onChange={(e) => setInputCode(e.target.value)}
+                        />
+                      </InputGroup>
+                      <InputGroup size="md" className="mb-3">
+                        <FormControl
+                          type="text"
+                          value={nuevoAsistente}
+                          placeholder={"Introduce el nombre del asistente"}
+                          onChange={(e) => setNuevoAsistente(e.target.value)}
+                        />
+                      </InputGroup>
+                      <Button variant="dark" onClick={addAsistente}>
+                        Inscripción
+                      </Button>
+                      <p>{feedback}</p>
+                    </Col>
+                  </Row>
+                  <div>{formaciones}</div>
+                </Container>
+              </Card.Text>
+            </Card.Body>
+            {/* </Card> */}
           </Col>
         </Row>
       </Container>
