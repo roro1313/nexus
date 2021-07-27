@@ -4,6 +4,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Card from "react-bootstrap/Card";
 import UserMenu from "./UserMenu";
+import Footer from "./Footer";
 
 function User(props) {
   return (
@@ -31,6 +32,7 @@ function User(props) {
           </Col>
         </Row>
       </Container>
+      <Footer />
     </>
   );
 }

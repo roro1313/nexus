@@ -5,6 +5,7 @@ import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
+import Footer from "./Footer";
 
 function Login(props) {
   if (props.loginData.logged && props.loginData.user.admin) {
@@ -13,10 +14,11 @@ function Login(props) {
     return <Redirect to="/user" />;
   } else {
     return (
-      <Container>
+      <>
+      <Container >
         <Row className="justify-content-md-center login">
           <Col xs sm md lg xl={4}>
-            <h4>Inicia sesión:</h4>
+            <h4 className="nunito dark">Inicia sesión:</h4>
             <InputGroup size="xs" className="mb-3">
               <FormControl
                 value={props.inputEmail}
@@ -32,13 +34,15 @@ function Login(props) {
                 onChange={(e) => props.setInputPass(e.target.value)}
               />
             </InputGroup>
-            <Button variant="primary" onClick={props.login}>
-              Login
+            <Button className="boton2 gris nunito" variant="dark" size="lg" onClick={props.login}>
+              Iniciar sesión
             </Button>
             <p>{props.loginData.mensaje}</p>
           </Col>
         </Row>
       </Container>
+      <Footer />
+      </>
     );
   }
 }

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 function UserMenu(props) {
   return (
-    <Card className={"card"} style={{ width: "20rem" }}>
+    <Card className={"card nunito"} style={{ width: "20rem" }}>
       <Card.Img variant="top" src={props.loginData.user.foto} />
       <Card.Body>
         <Card.Title>¡Hola, {props.loginData.user.nombre}!</Card.Title>

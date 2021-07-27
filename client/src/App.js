@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import "./App.css";
+import Inicio from "./Inicio";
+import Expli from "./Expli";
 import Cabecera from "./Cabecera";
+import Footer from "./Footer";
 import Training from "./Training";
 import Meeting from "./Meeting";
 import Login from "./Login";
@@ -15,9 +18,8 @@ import AdminBorrar from "./AdminBorrar";
 import AdminInscripcion from "./AdminInscripcion";
 import Logout from "./Logout";
 
-
 function App() {
-  const url = "http://localhost:3001"
+  const url = "http://localhost:3001";
   let [inputEmail, setInputEmail] = useState("");
   let [inputPass, setInputPass] = useState("");
   let [loginData, setLoginData] = useState({ logged: false });
@@ -50,16 +52,12 @@ function App() {
 
   return (
     <BrowserRouter>
-    <Cabecera loginData={loginData} />
+      <Cabecera loginData={loginData} />
       <Route exact path="/">
-              <Login
-          inputPass={inputPass}
-          inputEmail={inputEmail}
-          setInputEmail={setInputEmail}
-          setInputPass={setInputPass}
-          login={login}
-          loginData={loginData}
-        />
+        <Inicio loginData={loginData} />
+      </Route>
+      <Route exact path="/about">
+        <Expli />
       </Route>
       <Route exact path="/login">
         <Login
@@ -81,7 +79,7 @@ function App() {
         />
       </Route>
       <Route exact path="/user/edit">
-        <UserEdit loginData={loginData} setLoginData={setLoginData} url={url}/>
+        <UserEdit loginData={loginData} setLoginData={setLoginData} url={url} />
       </Route>
       <Route exact path="/user/training">
         <Training training={training} />
@@ -100,24 +98,40 @@ function App() {
         />
       </Route>
       <Route exact path="/admin/edit">
-        <AdminEdit loginData={loginData} setLoginData={setLoginData} url={url}/>
+        <AdminEdit
+          loginData={loginData}
+          setLoginData={setLoginData}
+          url={url}
+        />
       </Route>
       <Route exact path="/admin/inscripcion">
-        <AdminInscripcion loginData={loginData} /* training={training} */ url={url}/>
+        <AdminInscripcion loginData={loginData} training={training} url={url} />
       </Route>
       <Route exact path="/admin/find">
-        <AdminBuscar loginData={loginData} setLoginData={setLoginData} url={url}/>
+        <AdminBuscar
+          loginData={loginData}
+          setLoginData={setLoginData}
+          url={url}
+        />
       </Route>
       <Route exact path="/admin/create">
-        <AdminCrear loginData={loginData} setLoginData={setLoginData} url={url}/>
+        <AdminCrear
+          loginData={loginData}
+          setLoginData={setLoginData}
+          url={url}
+        />
       </Route>
       <Route exact path="/admin/delete">
-        <AdminBorrar loginData={loginData} setLoginData={setLoginData} url={url}/>
+        <AdminBorrar
+          loginData={loginData}
+          setLoginData={setLoginData}
+          url={url}
+        />
       </Route>
       <Route exact path="/logout">
         <Logout loginData={loginData} setLoginData={setLoginData} url={url} />
       </Route>
-{/*       <Route exact path="/admin/training">
+      {/*       <Route exact path="/admin/training">
       <AdminInscripcion loginData={loginData} training={training} />
         <Training training={training} />
       </Route>

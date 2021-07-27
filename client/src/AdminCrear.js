@@ -8,6 +8,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import AdminMenu from "./AdminMenu";
+import Footer from "./Footer";
 
 function AdminCrear(props) {
   let [inputNombre, setInputNombre] = useState("");
@@ -185,6 +186,7 @@ function AdminCrear(props) {
           </Col>
         </Row>
       </Container>
+      <Footer />
     </>
   );
 }

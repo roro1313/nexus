@@ -46,7 +46,6 @@ function AdminEdit(props) {
         setInputSedeEdit(data.respuesta[0].sede);
         setInputMovilEdit(data.respuesta[0].movil);
         setInputFotoEdit(data.respuesta[0].foto);
-
       });
   };
 
@@ -104,10 +103,10 @@ function AdminEdit(props) {
     <>
       <Container className={"user"}>
         <Row>
-          <Col xs={12} sm={12} md={12} lg xl={8}>
-          <AdminMenu loginData={props.loginData}/>
+          <Col xs sm md={12} lg xl={4}>
+            <AdminMenu loginData={props.loginData} />
           </Col>
-          <Col xs={12} sm={12} md={12} lg xl={8}>
+          <Col xs sm md lg xl={8}>
             <Card style={{ width: "40rem" }}>
               <Card.Body>
                 <Card.Text>
@@ -170,9 +169,7 @@ function AdminEdit(props) {
                             type="text"
                             value={inputSedeEdit}
                             placeholder={"Sede"}
-                            onChange={(e) =>
-                              setInputSedeEdit(e.target.value)
-                            }
+                            onChange={(e) => setInputSedeEdit(e.target.value)}
                           />
                         </InputGroup>
                         <InputGroup size="xs" className="mb-3">
@@ -201,9 +198,17 @@ function AdminEdit(props) {
                             onChange={(e) => setInputFotoEdit(e.target.value)}
                           />
                         </InputGroup>
-                        <Card.Img className={"imagen"} variant="top" src={inputFotoEdit} />
-                        <Button className={"redondo"} variant="dark" onClick={editarFoto}>
-                        🖊️
+                        <Card.Img
+                          className={"imagen"}
+                          variant="top"
+                          src={inputFotoEdit}
+                        />
+                        <Button
+                          className={"redondo"}
+                          variant="dark"
+                          onClick={editarFoto}
+                        >
+                          🖊️
                         </Button>
                         <p>{feedbackFoto}</p>
                       </Col>

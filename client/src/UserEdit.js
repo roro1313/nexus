@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import UserMenu from "./UserMenu";
+import Footer from "./Footer";
 
 function UserEdit(props) {
   let [inputNombre, setInputNombre] = useState(props.loginData.user.nombre);
@@ -144,6 +145,7 @@ function UserEdit(props) {
           </Col>
         </Row>
       </Container>
+      <Footer />
     </>
   );
 }

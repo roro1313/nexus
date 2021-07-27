@@ -3,6 +3,7 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Card from "react-bootstrap/Card";
+import Footer from "./Footer";
 
 function Admin(props) {
   if (props.loginData.user.admin) {
@@ -52,6 +53,7 @@ function Admin(props) {
             </Col>
           </Row>
         </Container>
+        <Footer />
       </>
     );
   } else {

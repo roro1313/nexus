@@ -6,8 +6,10 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
+import Form from 'react-bootstrap/Form'
 import AdminMenu from "./AdminMenu";
 import Tarjeta from "./Tarjeta";
+import Footer from "./Footer";
 
 function AdminBuscar(props) {
   let [inputEmailBuscar, setInputEmailBuscar] = useState("");
@@ -38,7 +40,6 @@ function AdminBuscar(props) {
         setFeedbackUser(data.mensaje);
       })
     );
-
   };
 
   const buscarDep = () => {
@@ -84,7 +85,7 @@ function AdminBuscar(props) {
       <Container className={"user"}>
         <Row>
           <Col xs sm md={12} lg xl={4}>
-          <AdminMenu loginData={props.loginData}/>
+            <AdminMenu loginData={props.loginData} />
           </Col>
           <Col xs sm md lg xl={8}>
             <Card style={{ width: "40rem" }}>
@@ -179,6 +180,7 @@ function AdminBuscar(props) {
           </Col>
         </Row>
       </Container>
+      <Footer />
     </>
   );
 }

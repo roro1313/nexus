@@ -2,21 +2,21 @@ import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
+import Footer from "./Footer";
 
 
 function AdminMenu(props){
     return(
-        <Card className={"card"} style={{ width: "20rem" }}>
-                {/* <Card.Img variant="top" src={props.loginData.user.foto} /> */}
+        <Card className={"card nunito"} style={{ width: "20rem" }}>
                 <Card.Body>
-                  <Card.Title>Admin</Card.Title>
+                  <Card.Title> Admin</Card.Title>
                   <Card.Text>
                     Estás en el perfil de administrador. Desde aquí puedes crear
                     usuarios, editar usuarios y borrar usuarios.
                   </Card.Text>
                 </Card.Body>
                 <ListGroup className="list-group-flush">
-                  <ListGroupItem>
+                  <ListGroupItem >
                     <Link to="/admin/find">Buscar usuarios</Link>
                   </ListGroupItem>
                   <ListGroupItem>
@@ -28,12 +28,12 @@ function AdminMenu(props){
                   <ListGroupItem>
                     <Link to="/admin/delete">Eliminar usuarios</Link>
                   </ListGroupItem>
-                  <ListGroupItem>
+{/*                   <ListGroupItem>
                     <Link to="/admin/training">Formaciones disponibles</Link>
                   </ListGroupItem>
                   <ListGroupItem>
                     <Link to="/admin/meeting">Eventos disponibles</Link>
-                  </ListGroupItem>
+                  </ListGroupItem> */}
                   <ListGroupItem>
                     <Link to="/admin/inscripcion">Inscribirse</Link>
                   </ListGroupItem>
