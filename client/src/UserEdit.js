@@ -79,69 +79,77 @@ function UserEdit(props) {
 
   return (
     <>
-      <Container className={"user"}>
+      <Container /* className={"user"} */>
         <Row>
           <Col xs sm md lg xl={4}>
             <UserMenu loginData={props.loginData} />
           </Col>
           <Col xs sm md lg xl={8}>
-            <Card style={{ width: "40rem" }}>
-              <Card.Body>
-                <Card.Text>
-                  <Container>
-                    <Row>
-                      <Col xs sm md lg xl={8}>
-                        <Card.Title>Modifica tus datos:</Card.Title>
-                        <p>Introduce los nuevos datos y guárdalos.</p>
-                        <InputGroup size="md" className="mb-3">
-                          <FormControl
-                            type="text"
-                            value={inputNombre}
-                            placeholder={"Introduce tu nuevo nombre"}
-                            onChange={(e) => setInputNombre(e.target.value)}
-                          />
-                        </InputGroup>
-                        <InputGroup size="xs" className="mb-3">
-                          <FormControl
-                            type="text"
-                            value={inputApellido}
-                            placeholder={"Introduce tu nuevo apellido"}
-                            onChange={(e) => setInputApellido(e.target.value)}
-                          />
-                        </InputGroup>
-                        <Button variant="dark" onClick={editarUser}>
-                          Guardar cambios
-                        </Button>
-                        <p>{feedbackUser}</p>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col xs sm md lg xl={8}>
-                        <Card.Title>Modifica tu foto:</Card.Title>
-                        <p>Introduce la URL de tu nueva foto de perfil.</p>
-                        <InputGroup size="md" className="mb-3">
-                          <FormControl
-                            type="text"
-                            value={inputFoto}
-                            placeholder={"Introduce la URL de la imagen"}
-                            onChange={(e) => setInputFoto(e.target.value)}
-                          />
-                        </InputGroup>
-                        <Card.Img
-                          className={"imagen"}
-                          variant="top"
-                          src={inputFoto}
+            {/* <Card style={{ width: "40rem" }}> */}
+            <Card.Body>
+              <Card.Text>
+                <Container>
+                  <Row>
+                    <Col xs sm md lg xl={8}>
+                      <Card.Title className="nunito">
+                        <strong>Modifica tus datos:</strong>
+                      </Card.Title>
+                      <p>Introduce los nuevos datos y guárdalos.</p>
+                      <InputGroup size="md" className="mb-3">
+                        <FormControl
+                          type="text"
+                          value={inputNombre}
+                          placeholder={"Introduce tu nuevo nombre"}
+                          onChange={(e) => setInputNombre(e.target.value)}
                         />
-                        <Button className={"redondo"} variant="dark" onClick={editarFoto}>
-                        🖊️
-                        </Button>
-                        <p>{feedbackFoto}</p>
-                      </Col>
-                    </Row>
-                  </Container>
-                </Card.Text>
-              </Card.Body>
-            </Card>
+                      </InputGroup>
+                      <InputGroup size="xs" className="mb-3">
+                        <FormControl
+                          type="text"
+                          value={inputApellido}
+                          placeholder={"Introduce tu nuevo apellido"}
+                          onChange={(e) => setInputApellido(e.target.value)}
+                        />
+                      </InputGroup>
+                      <Button variant="dark" onClick={editarUser}>
+                        Guardar cambios
+                      </Button>
+                      <p>{feedbackUser}</p>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col xs sm md lg xl={8}>
+                      <Card.Title className="nunito">
+                        <strong>Modifica tu foto:</strong>
+                      </Card.Title>
+                      <p>Introduce la URL de tu nueva foto de perfil.</p>
+                      <InputGroup size="md" className="mb-3">
+                        <FormControl
+                          type="text"
+                          value={inputFoto}
+                          placeholder={"Introduce la URL de la imagen"}
+                          onChange={(e) => setInputFoto(e.target.value)}
+                        />
+                      </InputGroup>
+                      <Card.Img
+                        className={"imagen"}
+                        variant="top"
+                        src={inputFoto}
+                      />
+                      <Button
+                        className={"redondo"}
+                        variant="dark"
+                        onClick={editarFoto}
+                      >
+                        <i class="far fa-edit"></i>
+                      </Button>
+                      <p>{feedbackFoto}</p>
+                    </Col>
+                  </Row>
+                </Container>
+              </Card.Text>
+            </Card.Body>
+            {/* </Card> */}
           </Col>
         </Row>
       </Container>

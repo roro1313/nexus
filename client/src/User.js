@@ -9,15 +9,15 @@ import Footer from "./Footer";
 function User(props) {
   return (
     <>
-      <Container className={"user"}>
+      <Container /* className={"user"} */>
         <Row>
         <Col xs sm md lg xl={4}>
             <UserMenu loginData={props.loginData} />
           </Col>
           <Col xs sm md lg xl={8}>
-            <Card style={{ width: "40rem" }}>
+            {/* <Card style={{ width: "40rem" }}> */}
               <Card.Body>
-                <Card.Title>Datos del perfil:</Card.Title>
+                <Card.Title className="nunito"><strong>Datos del perfil:</strong></Card.Title>
                 <Card.Text>
                   <p><strong>Nombre: </strong>{props.loginData.user.nombre}</p>
                   <p><strong>Apellido: </strong>{props.loginData.user.apellido}</p>
@@ -28,7 +28,7 @@ function User(props) {
                   <p><strong>Email corporativo: </strong>{props.loginData.user.email}</p>
                 </Card.Text>
               </Card.Body>
-            </Card>
+            {/* </Card> */}
           </Col>
         </Row>
       </Container>

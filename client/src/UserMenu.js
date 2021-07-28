@@ -23,10 +23,10 @@ function UserMenu(props) {
           <Link to="/user/edit">Editar datos de perfil</Link>
         </ListGroupItem>
         <ListGroupItem>
-          <Link to="/user/training">Formaciones disponibles</Link>
+          <Link to="/user/find">Búsqueda segmentada</Link>
         </ListGroupItem>
         <ListGroupItem>
-          <Link to="/user/meeting">Eventos disponibles</Link>
+          <Link to="/user/training">Gestión formaciones / eventos</Link>
         </ListGroupItem>
       </ListGroup>
       <Card.Body className="list-group-item-dark">
