@@ -541,7 +541,7 @@ app.post("/admin/training/create", (req, res) => {
                 fecha: req.body.fecha,
                 hora: req.body.hora,
                 lugar: req.body.lugar,
-                asistentes: req.body.asistentes,
+                asistentes: [req.body.asistentes],
               },
               function (error, datos) {
                 error

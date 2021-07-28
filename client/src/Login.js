@@ -5,6 +5,7 @@ import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
+import Alert from "react-bootstrap/Alert";
 import Footer from "./Footer";
 
 function Login(props) {
@@ -15,33 +16,42 @@ function Login(props) {
   } else {
     return (
       <>
-      <Container >
-        <Row className="justify-content-md-center login">
-          <Col xs sm md lg xl={4}>
-            <h4 className="nunito dark">Inicia sesión:</h4>
-            <InputGroup size="xs" className="mb-3">
-              <FormControl
-                value={props.inputEmail}
-                placeholder={"email"}
-                onChange={(e) => props.setInputEmail(e.target.value)}
-              />
-            </InputGroup>
-            <InputGroup size="xs" className="mb-3">
-              <FormControl
-                type="password"
-                value={props.inputPass}
-                placeholder={"contraseña"}
-                onChange={(e) => props.setInputPass(e.target.value)}
-              />
-            </InputGroup>
-            <Button className="boton2 gris nunito" variant="dark" size="lg" onClick={props.login}>
-              Iniciar sesión
-            </Button>
-            <p>{props.loginData.mensaje}</p>
-          </Col>
-        </Row>
-      </Container>
-      <Footer />
+        <Container>
+          <Row className="justify-content-md-center login">
+            <Col xs sm md lg xl={4}>
+              <h4 className="nunito dark">Inicia sesión:</h4>
+              <InputGroup size="xs" className="mb-3">
+                <FormControl
+                  value={props.inputEmail}
+                  placeholder={"email"}
+                  onChange={(e) => props.setInputEmail(e.target.value)}
+                />
+              </InputGroup>
+              <InputGroup size="xs" className="mb-3">
+                <FormControl
+                  type="password"
+                  value={props.inputPass}
+                  placeholder={"contraseña"}
+                  onChange={(e) => props.setInputPass(e.target.value)}
+                />
+              </InputGroup>
+              <Button
+                className="boton2 gris nunito"
+                variant="dark"
+                size="lg"
+                onClick={props.login}
+              >
+                Iniciar sesión
+              </Button>
+              {props.loginData.mensaje === undefined ? (<Alert variant={"light"}>
+                {props.loginData.mensaje}
+              </Alert>) : (<Alert variant={"danger"}>
+                {props.loginData.mensaje}
+              </Alert>)}
+            </Col>
+          </Row>
+        </Container>
+        <Footer />
       </>
     );
   }

@@ -28,22 +28,22 @@ function Inicio(props) {
           supone un <strong>72% de incremento en total.</strong> Según datos
           oficiales, hasta un 39%* de los empleados están experimentando
           alteraciones de su salud mental en este nuevo contexto laboral.
-          Podemos evitar estas situaciones, 
+          Podemos evitar estas situaciones,
           <strong>
-             impulsando iniciativas que involucren al personal y gestionándolo a
+            impulsando iniciativas que involucren al personal y gestionándolo a
             través de @nexus.
           </strong>
         </p>
         <p>
           Si quieres hacer que tu plantilla se componga de empleados
-          satisfechos, sanos, comprometidos y con ganas de liderar nuevos proyectos...
-          Apuesta por ellos: formación, eventos, desarrollo personal... Estás a
-          un solo paso de conseguir un mundo laboral mejor.
+          satisfechos, sanos, comprometidos y con ganas de liderar nuevos
+          proyectos... Apuesta por ellos: formación, eventos, desarrollo
+          personal... Estás a un solo paso de conseguir un mundo laboral mejor.
         </p>
       </Container>
       <Container className={"margins"}>
         <Row>
-          <Col xs sm md={12} lg xl={4} className="dark">
+          <Col xs={12} sm={12} md={12} lg={4} xl={4} className="dark">
             <h3 className="nunito dark">Optimización</h3>
             <p>
               Descubre todo el tiempo que puedes ahorrar en gestiones
@@ -51,14 +51,14 @@ function Inicio(props) {
               personal.
             </p>
           </Col>
-          <Col xs sm md={12} lg xl={4} className="dark">
+          <Col xs={12} sm={12} md={12} lg={4} xl={4} className="dark">
             <h3 className="nunito dark">Engagement</h3>
             <p>
               Mejora el bienestar de tu personal poniéndoles en el centro de
               interés. Comunícate y conseguirás más compromiso.
             </p>
           </Col>
-          <Col xs sm md={12} lg xl={4} className="dark">
+          <Col xs={12} sm={12} md={12} lg={4} xl={4} className="dark">
             <h3 className="nunito dark">Desarrollo</h3>
             <p>
               Impulsa el desarrollo colectivo a través de buenas prácticas
@@ -71,7 +71,7 @@ function Inicio(props) {
         solicita ahora tu prueba gratuita de 30 días
       </Button>
       <Container className="user margins">
-        <Col xs sm md={12} lg xl={6} className="dark">
+        <Col xs={12} sm={12} md={12} lg={6} xl={6} className="dark">
           <h3 className="nunito dark">
             Interfaz sencilla y perfiles diferenciados
           </h3>
@@ -84,21 +84,22 @@ function Inicio(props) {
           <ul>
             <li>Perfiles diferenciados</li>
             <li>Búsquedas segmentadas</li>
-            <li>Gestión de información</li>
-            <li>Edición y borrado de datos</li>
+            <li>
+              <strong>Gestión de información</strong>
+            </li>
             <li>Crea acciones y construye tu comunidad en pocos pasos</li>
           </ul>
         </Col>
-        <Col xs sm md={12} lg xl={6} className="dark">
+        <Col xs={12} sm={12} md={12} lg xl={6} className="dark">
           <i class="fas fa-laptop fa-10x icono user"></i>
         </Col>
       </Container>
 
       <Container className="user margins">
-        <Col xs sm md={12} lg xl={6} className="dark">
+        <Col xs={12} sm={12} md={12} lg={6} xl={6} className="dark">
           <i class="fas fa-project-diagram fa-10x icono user"></i>
         </Col>
-        <Col xs sm md={12} lg xl={6} className="dark">
+        <Col xs={12} sm={12} md={12} lg={6} xl={6} className="dark">
           <h3 className="nunito dark">Todos estarán conectados</h3>
           <p>
             Gracias a los <strong>perfiles exclusivos para usuarios</strong>,
@@ -111,15 +112,10 @@ function Inicio(props) {
             <li>
               Búsquedas <strong>segmentadas</strong>
             </li>
-            <li>Edición y borrado de datos</li>
+            <li>Edición y consulta de datos</li>
             <li>Máxima seguridad de la información</li>
           </ul>
         </Col>
-      </Container>
-      <Container>
-{/*         <Button className="boton2 gris nunito" variant="dark" size="lg">
-          Inicia sesión y empieza
-        </Button> */}
       </Container>
       <Footer />
     </>

@@ -28,6 +28,7 @@ function AdminGestion(props) {
   let [descripcionEditEvento, setDescripcionEditEvento] = useState("");
   let [codeEvento, setCodeEvento] = useState("");
   let [fechaEvento, setFechaEvento] = useState("");
+  let [asistentesEvento, setAsistentesEvento] = useState("");
   let [fechaEditEvento, setFechaEditEvento] = useState("");
   let [eventEdit, setEventEdit] = useState([]);
   let [eventNew, setEventNew] = useState([]);
@@ -48,6 +49,8 @@ function AdminGestion(props) {
         fecha: fechaEvento,
         descripcion: descripcionEvento,
         hora: horaEvento,
+        asistentes: [asistentesEvento],
+
       }),
       credentials: "include",
     })
@@ -251,6 +254,14 @@ function AdminGestion(props) {
                           value={descripcionEvento}
                           placeholder={"Descripcion del evento"}
                           onChange={(e) => setDescripcionEvento(e.target.value)}
+                        />
+                      </InputGroup>
+                      <InputGroup size="md" className="mb-3">
+                        <FormControl
+                          type="text"
+                          value={asistentesEvento}
+                          placeholder={"Asistentes al evento"}
+                          onChange={(e) => setAsistentesEvento(e.target.value)}
                         />
                       </InputGroup>
                       <Button variant="dark" onClick={crearEvento}>

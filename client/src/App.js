@@ -45,6 +45,15 @@ function App() {
       });
   }
 
+  useEffect(() => {
+    fetch("http://localhost:3001/training")
+      .then((res) => res.json())
+      .then((data) => setTraining(data));
+    fetch("http://localhost:3001/meeting")
+      .then((res) => res.json())
+      .then((data) => setMeeting(data));
+  }, []);
+
   return (
     <BrowserRouter>
       <Cabecera loginData={loginData} />
