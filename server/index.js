@@ -485,6 +485,40 @@ app.get("/admin/training", (req, res) => {
   }
 });
 
+app.post("/admin/eventos", (req, res) => {
+  if (req.isAuthenticated()) {
+    db.collection("training")
+      .find({ code: req.body.code })
+      .toArray((error, datos) => {
+        if (error) {
+          res.send({
+            error: true,
+            respuesta: error,
+            mensaje: "Ha habido un error",
+          });
+        } else {
+          if (datos.length > 0) {
+            res.send({
+              error: false,
+              respuesta: datos,
+              mensaje: "Evento encontrado",
+            });
+          } else {
+            res.send({
+              error: false,
+              respuesta: datos,
+              mensaje: "Evento no encontrado",
+            });
+          }
+        }
+      });
+  } else {
+    res.send({
+      mensaje: "No se puede acceder a los datos sin iniciar sesión",
+    });
+  }
+});
+
 app.post("/admin/training/create", (req, res) => {
   if (req.isAuthenticated()) {
     db.collection("training")
@@ -505,6 +539,7 @@ app.post("/admin/training/create", (req, res) => {
                 code: req.body.code,
                 descripcion: req.body.descripcion,
                 fecha: req.body.fecha,
+                hora: req.body.hora,
                 lugar: req.body.lugar,
                 asistentes: req.body.asistentes,
               },
@@ -610,7 +645,7 @@ app.put("/admin/training/sign", (req, res) => {
                         : res.send({
                             error: false,
                             mensaje: `Se ha añadido correctamente`,
-                            contenido: datos,
+                            respuesta: datos,
                           });
                     });
                 }
@@ -648,6 +683,7 @@ app.delete("/admin/training/delete", (req, res) => {
                   nombre: req.body.nombre,
                   descripcion: req.body.descripcion,
                   fecha: req.body.fecha,
+                  hora: req.body.hora,
                   lugar: req.body.lugar,
                   asistentes: req.body.asistentes,
                 },
@@ -671,161 +707,6 @@ app.delete("/admin/training/delete", (req, res) => {
     });
   }
 });
-
-//------------------ Rutas de administración de eventos:
-
-app.get("/admin/meeting", (req, res) => {
-  if (req.isAuthenticated()) {
-    db.collection("meeting")
-      .find()
-      .toArray((error, datos) => {
-        error
-          ? res.send({ error: true, respuesta: error })
-          : res.send({ error: false, respuesta: datos });
-      });
-  } else {
-    res.send({
-      mensaje: "No se puede acceder a los datos sin iniciar sesión",
-    });
-  }
-});
-
-app.post("/admin/meeting/create", (req, res) => {
-  if (req.isAuthenticated()) {
-    db.collection("meeting")
-      .find({ code: req.body.code })
-      .toArray((error, data) => {
-        if (error) {
-          res.send({ error: true, contenido: error });
-        } else {
-          if (data.length === 1) {
-            res.send({
-              error: false,
-              mensaje: "El código de meeting ya existe",
-            });
-          } else {
-            db.collection("meeting").insertOne(
-              {
-                nombre: req.body.nombre,
-                code: req.body.code,
-                descripcion: req.body.descripcion,
-                fecha: req.body.fecha,
-                lugar: req.body.lugar,
-                asistentes: req.body.asistentes,
-              },
-              function (error, datos) {
-                error
-                  ? res.send({ error: true, contenido: error })
-                  : res.send({
-                      error: false,
-                      mensaje: `Se ha creado ${datos.insertedCount} meeting correctamente`,
-                      contenido: datos,
-                    });
-              }
-            );
-          }
-        }
-      });
-  } else {
-    res.send({
-      mensaje: "No se puede acceder a los datos sin iniciar sesión",
-    });
-  }
-});
-
-app.put("/admin/meeting/edit", (req, res) => {
-  if (req.isAuthenticated()) {
-    db.collection("meeting")
-      .find({ code: req.body.code })
-      .toArray((error, data) => {
-        if (error) {
-          res.send({ error: true, contenido: error });
-        } else {
-          if (data.length === 0) {
-            res.send({
-              error: false,
-              mensaje:
-                "El código de meeting no existe, prueba de nuevo con otro código",
-            });
-          } else {
-            db.collection("meeting").updateOne(
-              { code: req.body.code },
-              {
-                $set: {
-                  nombre: req.body.nombre,
-                  descripcion: req.body.descripcion,
-                  fecha: req.body.fecha,
-                  lugar: req.body.lugar,
-                  asistentes: req.body.asistentes,
-                },
-              },
-              function (error, datos) {
-                error
-                  ? res.send({ error: true, contenido: error })
-                  : res.send({
-                      error: false,
-                      mensaje: `Se ha modificado ${datos.modifiedCount} meeting correctamente`,
-                      contenido: datos,
-                    });
-              }
-            );
-          }
-        }
-      });
-  } else {
-    res.send({
-      mensaje: "No se puede acceder a los datos sin iniciar sesión",
-    });
-  }
-});
-
-app.delete("/admin/meeting/delete", (req, res) => {
-  if (req.isAuthenticated()) {
-    db.collection("meeting")
-      .find({ code: req.body.code })
-      .toArray((error, data) => {
-        if (error) {
-          res.send({ error: true, contenido: error });
-        } else {
-          if (data.length === 0) {
-            res.send({
-              error: false,
-              mensaje:
-                "El código de meeting no existe, prueba de nuevo con otro código",
-            });
-          } else {
-            db.collection("meeting").deleteOne(
-              { code: req.body.code },
-              {
-                $set: {
-                  nombre: req.body.nombre,
-                  descripcion: req.body.descripcion,
-                  fecha: req.body.fecha,
-                  lugar: req.body.lugar,
-                  asistentes: req.body.asistentes,
-                },
-              },
-              function (error, datos) {
-                error
-                  ? res.send({ error: true, contenido: error })
-                  : res.send({
-                      error: false,
-                      mensaje: `Se ha eliminado ${datos.deletedCount} meeting correctamente`,
-                      contenido: datos,
-                    });
-              }
-            );
-          }
-        }
-      });
-  } else {
-    res.send({
-      mensaje: "No se puede acceder a los datos sin iniciar sesión",
-    });
-  }
-});
-
-//------------------ Rutas de administración de vacaciones:
 
 /* --------------------------------------------------------------------------------------------------- */
 /* ------------------------------------------ RUTAS USUARIO ------------------------------------------ */

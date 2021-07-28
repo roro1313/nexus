@@ -28,14 +28,11 @@ function AdminMenu(props){
                   <ListGroupItem>
                     <Link to="/admin/delete">Eliminar usuarios</Link>
                   </ListGroupItem>
-{/*                   <ListGroupItem>
-                    <Link to="/admin/training">Formaciones disponibles</Link>
+                  <ListGroupItem>
+                    <Link to="/admin/inscripcion">Inscripción eventos / formaciones</Link>
                   </ListGroupItem>
                   <ListGroupItem>
-                    <Link to="/admin/meeting">Eventos disponibles</Link>
-                  </ListGroupItem> */}
-                  <ListGroupItem>
-                    <Link to="/admin/inscripcion">Inscribirse</Link>
+                    <Link to="/admin/gestionEventos">Edición eventos / formaciones</Link>
                   </ListGroupItem>
                 </ListGroup>
                 <Card.Body className="list-group-item-dark">

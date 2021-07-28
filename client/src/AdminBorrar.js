@@ -35,19 +35,19 @@ function AdminBorrar(props) {
 
   return (
     <>
-      <Container className={"user"}>
+      <Container /* className={"user"} */>
         <Row>
           <Col xs sm md={1} lg xl={4}>
             <AdminMenu loginData={props.loginData} />
           </Col>
           <Col xs sm md lg xl={8}>
-            <Card style={{ width: "40rem" }}>
+            {/* <Card style={{ width: "40rem" }}> */}
               <Card.Body>
                 <Card.Text>
                   <Container>
                     <Row>
                       <Col xs sm md lg xl={8}>
-                        <Card.Title>Borrar usuarios:</Card.Title>
+                        <Card.Title className="nunito"><strong>Borrar usuarios:</strong></Card.Title>
                         <p>Introduce un email para eliminar usuarios.</p>
                         <InputGroup size="md" className="mb-3">
                           <FormControl
@@ -66,7 +66,7 @@ function AdminBorrar(props) {
                   </Container>
                 </Card.Text>
               </Card.Body>
-            </Card>
+            {/* </Card> */}
           </Col>
         </Row>
       </Container>

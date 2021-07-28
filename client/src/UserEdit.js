@@ -35,8 +35,6 @@ function UserEdit(props) {
       .then((res) => res.json())
       .then((data) => {
         setUserEdit(data);
-        setInputNombre("");
-        setInputApellido("");
         setFeedbackUser(data.mensaje);
       })
       .then(
@@ -72,7 +70,6 @@ function UserEdit(props) {
       .then((res) => res.json())
       .then((data) => {
         setUserEdit(data);
-        setInputFoto("");
         setFeedbackFoto(data.mensaje);
       });
   };
@@ -146,6 +143,10 @@ function UserEdit(props) {
                       <p>{feedbackFoto}</p>
                     </Col>
                   </Row>
+                  <p>
+                    Si no visualizas todos los cambios correctamente, inicia
+                    sesión de nuevo.
+                  </p>
                 </Container>
               </Card.Text>
             </Card.Body>

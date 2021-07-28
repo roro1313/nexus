@@ -10,12 +10,15 @@ import Meeting from "./Meeting";
 import Login from "./Login";
 import User from "./User";
 import UserEdit from "./UserEdit";
+import UserInscripcion from "./UserInscripcion";
+import UserBuscar from "./UserBuscar";
 import Admin from "./Admin";
 import AdminEdit from "./AdminEdit";
 import AdminBuscar from "./AdminBuscar";
 import AdminCrear from "./AdminCrear";
 import AdminBorrar from "./AdminBorrar";
 import AdminInscripcion from "./AdminInscripcion";
+import AdminGestion from "./AdminGestion";
 import Logout from "./Logout";
 
 function App() {
@@ -23,7 +26,7 @@ function App() {
   let [inputEmail, setInputEmail] = useState("");
   let [inputPass, setInputPass] = useState("");
   let [loginData, setLoginData] = useState({ logged: false });
-
+  let [feedbackEdit, setFeedbackEdit] = useState("");
   let [training, setTraining] = useState([]);
   let [meeting, setMeeting] = useState([]);
 
@@ -41,14 +44,6 @@ function App() {
         setLoginData(data);
       });
   }
-  useEffect(() => {
-    fetch("http://localhost:3001/training")
-      .then((res) => res.json())
-      .then((data) => setTraining(data));
-    fetch("http://localhost:3001/meeting")
-      .then((res) => res.json())
-      .then((data) => setMeeting(data));
-  }, []);
 
   return (
     <BrowserRouter>
@@ -70,32 +65,23 @@ function App() {
         />
       </Route>
       <Route exact path="/user">
-        <User
-          training={training}
-          setTraining={setTraining}
-          meeting={meeting}
-          setMeeting={setMeeting}
-          loginData={loginData}
-        />
+        <User loginData={loginData} />
       </Route>
       <Route exact path="/user/edit">
         <UserEdit loginData={loginData} setLoginData={setLoginData} url={url} />
       </Route>
       <Route exact path="/user/training">
-        <Training training={training} />
+        <UserInscripcion loginData={loginData} url={url} />
       </Route>
-      <Route exact path="/user/meeting">
-        <Meeting meeting={meeting} />
-      </Route>
-      <Route exact path="/admin">
-        <Admin
-          training={training}
-          setTraining={setTraining}
-          meeting={meeting}
-          setMeeting={setMeeting}
+      <Route exact path="/user/find">
+        <UserBuscar
           loginData={loginData}
+          setLoginData={setLoginData}
           url={url}
         />
+      </Route>
+      <Route exact path="/admin">
+        <Admin loginData={loginData} url={url} />
       </Route>
       <Route exact path="/admin/edit">
         <AdminEdit
@@ -105,7 +91,10 @@ function App() {
         />
       </Route>
       <Route exact path="/admin/inscripcion">
-        <AdminInscripcion loginData={loginData} training={training} url={url} />
+        <AdminInscripcion loginData={loginData} url={url} />
+      </Route>
+      <Route exact path="/admin/gestionEventos">
+        <AdminGestion loginData={loginData} url={url} />
       </Route>
       <Route exact path="/admin/find">
         <AdminBuscar
@@ -131,13 +120,6 @@ function App() {
       <Route exact path="/logout">
         <Logout loginData={loginData} setLoginData={setLoginData} url={url} />
       </Route>
-      {/*       <Route exact path="/admin/training">
-      <AdminInscripcion loginData={loginData} training={training} />
-        <Training training={training} />
-      </Route>
-      <Route exact path="/admin/meeting">
-        <Meeting meeting={meeting} />
-      </Route> */}
     </BrowserRouter>
   );
 }

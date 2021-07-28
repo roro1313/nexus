@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Spinner from "react-bootstrap/Spinner";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -46,7 +45,6 @@ function AdminInscripcion(props) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.respuesta);
         setAsistentes(data.respuesta);
         setFeedback(data.mensaje);
       });
@@ -58,7 +56,7 @@ function AdminInscripcion(props) {
         <Card.Body>
           <Card.Title>{formacion.nombre}</Card.Title>
           <Card.Subtitle className="mb-2 text-muted">
-            Código de formación: {formacion.code}
+            Código: {formacion.code}
           </Card.Subtitle>
           <Card.Subtitle className="mb-2 text-muted">
             {formacion.fecha}, {formacion.hora}, {formacion.lugar}
@@ -94,7 +92,7 @@ function AdminInscripcion(props) {
                 <Container>
                   <Row>
                     <Col xs sm md lg xl={8}>
-                      <Card.Title>Formaciones disponibles:</Card.Title>
+                      <Card.Title className="nunito"><strong>Formaciones disponibles:</strong></Card.Title>
                       <p>¿Quieres inscribirte a alguna?</p>
                       <InputGroup size="md" className="mb-3">
                         <FormControl

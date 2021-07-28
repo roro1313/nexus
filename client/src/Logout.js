@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
+import Footer from "./Footer";
 
 function Logout(props) {
   let [logout, setLogout] = useState({});
@@ -25,12 +25,29 @@ function Logout(props) {
 
   return (
     <>
-      <Container>
-        <Row>
-        <h4>{logout.mensaje}</h4>
-        <p>Recuerda que puedes volver a iniciar sesión en cualquier momento para ver y editar tus datos.</p>
-        </Row>
+      <Container className="margins">
+        <br />
+        <br />
+        <br />
+        <br />
+        <h4 className="nunito margins">{logout.mensaje}</h4>
+        <p>
+          Recuerda que puedes volver a iniciar sesión en cualquier momento
+          accediendo al login desde el menú principal.
+        </p>
+        <p>
+          También puedes consultar las{" "}
+          <a href="/about">
+            <strong>preguntas frecuentes</strong>
+          </a>{" "}
+          o vsitar la página de inicio para conseguir más información.
+        </p>
+        <br />
+        <br />
+        <br />
+        <br />
       </Container>
+      <Footer />
     </>
   );
 }

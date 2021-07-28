@@ -94,26 +94,27 @@ function AdminEdit(props) {
       .then((res) => res.json())
       .then((data) => {
         setUserEdit(data);
-        setInputFotoEdit("");
         setFeedbackFoto(data.mensaje);
       });
   };
 
   return (
     <>
-      <Container className={"user"}>
+      <Container /* className={"user"} */>
         <Row>
           <Col xs sm md={12} lg xl={4}>
             <AdminMenu loginData={props.loginData} />
           </Col>
           <Col xs sm md lg xl={8}>
-            <Card style={{ width: "40rem" }}>
+            {/* <Card style={{ width: "40rem" }}> */}
               <Card.Body>
                 <Card.Text>
                   <Container>
                     <Row>
                       <Col xs={12} sm={12} md={12} lg xl={8}>
-                        <Card.Title>Modificar datos:</Card.Title>
+                        <Card.Title className="nunito">
+                          <strong>Modificar datos:</strong>
+                        </Card.Title>
                         <p>¿De qué usuario quieres cambiar los datos?</p>
                         <InputGroup size="md" className="mb-3">
                           <FormControl
@@ -188,7 +189,9 @@ function AdminEdit(props) {
                     </Row>
                     <Row>
                       <Col xs sm md lg xl={8}>
-                        <Card.Title>Modificar foto:</Card.Title>
+                        <Card.Title className="nunito">
+                          <strong>Modificar foto:</strong>
+                        </Card.Title>
                         <p>Introduce la URL de la nueva foto.</p>
                         <InputGroup size="md" className="mb-3">
                           <FormControl
@@ -208,7 +211,7 @@ function AdminEdit(props) {
                           variant="dark"
                           onClick={editarFoto}
                         >
-                          🖊️
+                          <i class="far fa-edit"></i>
                         </Button>
                         <p>{feedbackFoto}</p>
                       </Col>
@@ -216,7 +219,7 @@ function AdminEdit(props) {
                   </Container>
                 </Card.Text>
               </Card.Body>
-            </Card>
+           {/*  </Card> */}
           </Col>
         </Row>
       </Container>

@@ -71,19 +71,19 @@ function AdminCrear(props) {
 
   return (
     <>
-      <Container className={"user"}>
+      <Container /* className={"user"} */>
         <Row>
           <Col xs sm md={1} lg xl={4}>
           <AdminMenu loginData={props.loginData}/>
           </Col>
           <Col xs sm md lg xl={8}>
-            <Card style={{ width: "40rem" }}>
+            {/* <Card style={{ width: "40rem" }}> */}
               <Card.Body>
                 <Card.Text>
                   <Container>
                     <Row>
                       <Col xs sm md lg xl={8}>
-                        <Card.Title>Crear usuarios:</Card.Title>
+                        <Card.Title className="nunito"><strong>Crear usuarios:</strong></Card.Title>
                         <p>Completa la información para crear nuevos usuarios.</p>
                         <Form.Check
                           inline
@@ -182,7 +182,7 @@ function AdminCrear(props) {
                   </Container>
                 </Card.Text>
               </Card.Body>
-            </Card>
+            {/* </Card> */}
           </Col>
         </Row>
       </Container>

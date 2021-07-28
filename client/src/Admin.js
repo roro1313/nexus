@@ -9,15 +9,15 @@ function Admin(props) {
   if (props.loginData.user.admin) {
     return (
       <>
-        <Container className={"user"}>
+        <Container /* className={"user"} */>
           <Row xs sm md lg xl={12}>
             <Col xs={12} sm={12} md={12} lg xl={4}>
               <AdminMenu loginData={props.loginData} />
             </Col>
             <Col xs={12} sm={12} md={12} lg xl={8}>
-              <Card style={{ width: "40rem" }}>
+              {/* <Card style={{ width: "40rem" }}> */}
                 <Card.Body>
-                  <Card.Title>Datos del perfil:</Card.Title>
+                  <Card.Title className="nunito"><strong>Datos del perfil:</strong></Card.Title>
                   <Card.Text>
                     <p>
                       <strong>Nombre: </strong>
@@ -49,7 +49,7 @@ function Admin(props) {
                     </p>
                   </Card.Text>
                 </Card.Body>
-              </Card>
+              {/* </Card> */}
             </Col>
           </Row>
         </Container>

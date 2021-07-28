@@ -23,7 +23,7 @@ function Cabecera(props) {
             <Nav.Link href="/">Inicio</Nav.Link>
             <Nav.Link href="/about">Acerca de</Nav.Link>
           </Nav>
-          <Nav.Link href="#">¡Hola, {props.loginData.user.nombre}!</Nav.Link>
+          <Nav.Link className="gris">¡Hola, {props.loginData.user.nombre}!</Nav.Link>
           <img
             className="imagenCabecera"
             src={props.loginData.user.foto}

@@ -82,19 +82,19 @@ function AdminBuscar(props) {
 
   return (
     <>
-      <Container className={"user"}>
+      <Container /* className={"user"} */>
         <Row>
           <Col xs sm md={12} lg xl={4}>
             <AdminMenu loginData={props.loginData} />
           </Col>
           <Col xs sm md lg xl={8}>
-            <Card style={{ width: "40rem" }}>
+            {/* <Card style={{ width: "40rem" }}> */}
               <Card.Body>
                 <Card.Text>
                   <Container>
                     <Row>
                       <Col xs sm md lg xl={8}>
-                        <Card.Title>Buscar usuarios:</Card.Title>
+                        <Card.Title className="nunito"><strong>Buscar usuarios:</strong></Card.Title>
                         <p>Introduce un email para buscar usuarios.</p>
                         <InputGroup size="md" className="mb-3">
                           <FormControl
@@ -119,7 +119,7 @@ function AdminBuscar(props) {
                     </Row>
                     <Row>
                       <Col xs sm md lg xl={8}>
-                        <Card.Title>Buscar por departamento:</Card.Title>
+                        <Card.Title className="nunito"><strong>Buscar por departamento:</strong></Card.Title>
                         <p>Introduce un departamento para buscar usuarios.</p>
                         <InputGroup size="md" className="mb-3">
                           <FormControl
@@ -148,7 +148,7 @@ function AdminBuscar(props) {
                     </Row>
                     <Row>
                       <Col xs sm md lg xl={8}>
-                        <Card.Title>Buscar por sede:</Card.Title>
+                        <Card.Title className="nunito"><strong>Buscar por sede:</strong></Card.Title>
                         <p>Introduce una sede para buscar usuarios.</p>
                         <InputGroup size="md" className="mb-3">
                           <FormControl
@@ -176,7 +176,7 @@ function AdminBuscar(props) {
                   </Container>
                 </Card.Text>
               </Card.Body>
-            </Card>
+            {/* </Card> */}
           </Col>
         </Row>
       </Container>
