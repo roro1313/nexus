@@ -32,7 +32,7 @@ function AdminMenu(props){
                     <Link to="/admin/inscripcion">Inscripción eventos / formaciones</Link>
                   </ListGroupItem>
                   <ListGroupItem>
-                    <Link to="/admin/gestionEventos">Edición eventos / formaciones</Link>
+                    <Link to="/admin/gestionEventos">Gestión eventos / formaciones</Link>
                   </ListGroupItem>
                 </ListGroup>
                 <Card.Body className="list-group-item-dark">
